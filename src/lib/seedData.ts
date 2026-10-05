@@ -143,6 +143,24 @@ export const VSS_FALL_2026: SeedCourse[] = [
       { unit: 'Unit 4: #LandBack', title: 'Final Written Exam', type: 'exam', weight: 20 },
     ],
   },
+  {
+    code: 'BOH4M',
+    name: 'Business Leadership: Management Fundamentals',
+    color: '#0ea5e9',
+    category_weights: { K: 25, T: 25, C: 25, A: 25 },
+    term_structure: { term_work: 70, exam: 30, attendance: 0 },
+    units: [],
+    assessments: [],
+  },
+  {
+    code: 'SCH3U',
+    name: 'Chemistry, University Preparation',
+    color: '#a855f7',
+    category_weights: { K: 25, T: 25, C: 25, A: 25 },
+    term_structure: { term_work: 70, exam: 30, attendance: 0 },
+    units: [],
+    assessments: [],
+  },
 ]
 
 export async function importSeedCourses(userId: string) {
