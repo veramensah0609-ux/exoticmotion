@@ -13,6 +13,7 @@ export default function AssessmentSheet({ assessment, onClose }: { assessment: A
   const [earned, setEarned] = useState(assessment.mark_earned != null ? String(assessment.mark_earned) : '')
   const [total, setTotal] = useState(assessment.mark_total != null ? String(assessment.mark_total) : '')
   const [dueDate, setDueDate] = useState(assessment.due_date ?? '')
+  const [dueTime, setDueTime] = useState(assessment.due_time ?? '')
   const [saving, setSaving] = useState(false)
 
   async function setStatus(status: AssessmentStatus) {
@@ -30,6 +31,7 @@ export default function AssessmentSheet({ assessment, onClose }: { assessment: A
         mark_earned: earned === '' ? null : Number(earned),
         mark_total: total === '' ? null : Number(total),
         due_date: dueDate || null,
+        due_time: dueTime || null,
         status: earned !== '' ? 'done' : assessment.status,
       })
       .eq('id', assessment.id)
@@ -71,22 +73,32 @@ export default function AssessmentSheet({ assessment, onClose }: { assessment: A
               className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-1.5 outline-none"
             />
           </label>
-          <div className="text-xs space-y-1">
-            <span className="opacity-50">Status</span>
-            <div className="flex gap-1">
-              {(['upcoming', 'missing', 'excused'] as AssessmentStatus[]).map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setStatus(s)}
-                  disabled={saving}
-                  className={`flex-1 rounded-lg py-1.5 text-[11px] font-medium capitalize ${
-                    assessment.status === s ? 'bg-red-500 text-white' : 'bg-black/5 dark:bg-white/10 opacity-60'
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
+          <label className="text-xs space-y-1">
+            <span className="opacity-50">Time (optional)</span>
+            <input
+              type="time"
+              value={dueTime}
+              onChange={(e) => setDueTime(e.target.value)}
+              className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-1.5 outline-none"
+            />
+          </label>
+        </div>
+
+        <div className="text-xs space-y-1">
+          <span className="opacity-50">Status</span>
+          <div className="flex gap-1">
+            {(['upcoming', 'missing', 'excused'] as AssessmentStatus[]).map((s) => (
+              <button
+                key={s}
+                onClick={() => setStatus(s)}
+                disabled={saving}
+                className={`flex-1 rounded-lg py-1.5 text-[11px] font-medium capitalize ${
+                  assessment.status === s ? 'bg-red-500 text-white' : 'bg-black/5 dark:bg-white/10 opacity-60'
+                }`}
+              >
+                {s}
+              </button>
+            ))}
           </div>
         </div>
 

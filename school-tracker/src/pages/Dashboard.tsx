@@ -5,11 +5,13 @@ import { daysUntil, isOverdue } from '../lib/priority'
 import { supabase } from '../lib/supabase'
 import { format } from 'date-fns'
 import AssessmentSheet from '../components/AssessmentSheet'
-import type { Assessment } from '../lib/types'
+import TaskSheet from '../components/TaskSheet'
+import type { Assessment, Task } from '../lib/types'
 
 export default function Dashboard() {
   const { courses, units, assessments, tasks, refresh } = useData()
   const [selectedAssessment, setSelectedAssessment] = useState<Assessment | null>(null)
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
   const courseById = useMemo(() => Object.fromEntries(courses.map((c) => [c.id, c])), [courses])
 
@@ -64,7 +66,7 @@ export default function Dashboard() {
             <h2 className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2">Overdue ({overdueTasks.length})</h2>
             <Card className="divide-y divide-black/5 dark:divide-white/10">
               {overdueTasks.map((t) => (
-                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} />
+                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
               ))}
             </Card>
           </section>
@@ -95,7 +97,7 @@ export default function Dashboard() {
               <EmptyState text="Nothing due today. Nice." />
             ) : (
               todayTasks.map((t) => (
-                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} />
+                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
               ))
             )}
           </Card>
@@ -106,7 +108,7 @@ export default function Dashboard() {
             <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Coming up</h2>
             <Card className="divide-y divide-black/5 dark:divide-white/10">
               {upcomingTasks.map((t) => (
-                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} />
+                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
               ))}
             </Card>
           </section>
@@ -135,6 +137,7 @@ export default function Dashboard() {
       </div>
 
       {selectedAssessment && <AssessmentSheet assessment={selectedAssessment} onClose={() => setSelectedAssessment(null)} />}
+      {selectedTask && <TaskSheet task={selectedTask} onClose={() => setSelectedTask(null)} />}
     </div>
   )
 }
@@ -143,10 +146,12 @@ function TaskRow({
   task,
   course,
   onToggle,
+  onSelect,
 }: {
-  task: import('../lib/types').Task
+  task: Task
   course?: import('../lib/types').Course
   onToggle: (id: string, completed: boolean) => void
+  onSelect: (task: Task) => void
 }) {
   return (
     <div className="flex items-center gap-2.5 px-4 py-3">
@@ -162,10 +167,10 @@ function TaskRow({
           </svg>
         )}
       </button>
-      <div className="min-w-0 flex-1">
+      <button onClick={() => onSelect(task)} className="min-w-0 flex-1 text-left">
         <p className={`text-sm font-medium truncate ${task.completed ? 'line-through opacity-40' : ''}`}>{task.title}</p>
         {course && <p className="text-xs opacity-50 flex items-center gap-1 mt-0.5"><CourseDot color={course.color} />{course.code}</p>}
-      </div>
+      </button>
       <DueBadge date={task.due_date} done={task.completed} />
     </div>
   )

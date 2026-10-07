@@ -3,12 +3,21 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { useData } from '../contexts/DataContext'
 
-export default function QuickAdd({ onClose }: { onClose: () => void }) {
+export default function QuickAdd({
+  onClose,
+  defaultDate,
+  defaultTime,
+}: {
+  onClose: () => void
+  defaultDate?: string
+  defaultTime?: string
+}) {
   const { user } = useAuth()
   const { courses, refresh } = useData()
   const [title, setTitle] = useState('')
   const [courseId, setCourseId] = useState('')
-  const [dueDate, setDueDate] = useState('')
+  const [dueDate, setDueDate] = useState(defaultDate ?? '')
+  const [dueTime, setDueTime] = useState(defaultTime ?? '')
   const [estimate, setEstimate] = useState('')
   const [busy, setBusy] = useState(false)
 
@@ -21,6 +30,7 @@ export default function QuickAdd({ onClose }: { onClose: () => void }) {
       title: title.trim(),
       course_id: courseId || null,
       due_date: dueDate || null,
+      due_time: dueTime || null,
       estimate_minutes: estimate ? Number(estimate) : null,
     })
     await refresh()
@@ -44,11 +54,11 @@ export default function QuickAdd({ onClose }: { onClose: () => void }) {
           placeholder="What do you need to do?"
           className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <select
             value={courseId}
             onChange={(e) => setCourseId(e.target.value)}
-            className="col-span-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
+            className="rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
           >
             <option value="">No course</option>
             {courses.map((c) => (
@@ -58,18 +68,24 @@ export default function QuickAdd({ onClose }: { onClose: () => void }) {
             ))}
           </select>
           <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            className="col-span-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
-          />
-          <input
             type="number"
             min={0}
             value={estimate}
             onChange={(e) => setEstimate(e.target.value)}
             placeholder="mins"
-            className="col-span-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
+            className="rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
+          />
+          <input
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            className="rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
+          />
+          <input
+            type="time"
+            value={dueTime}
+            onChange={(e) => setDueTime(e.target.value)}
+            className="rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
           />
         </div>
         <div className="flex gap-2 pt-1">
