@@ -12,6 +12,8 @@ export default function Tasks() {
   const [filterCourse, setFilterCourse] = useState<string>('all')
   const [showDone, setShowDone] = useState(false)
   const [newTitle, setNewTitle] = useState('')
+  const [newDueDate, setNewDueDate] = useState('')
+  const [newCourseId, setNewCourseId] = useState('')
   const [expanded, setExpanded] = useState<string | null>(null)
   const [subtaskDraft, setSubtaskDraft] = useState('')
 
@@ -31,9 +33,12 @@ export default function Tasks() {
     await supabase.from('tasks').insert({
       user_id: user.id,
       title: newTitle.trim(),
-      course_id: filterCourse === 'all' ? null : filterCourse,
+      course_id: newCourseId || (filterCourse === 'all' ? null : filterCourse),
+      due_date: newDueDate || null,
     })
     setNewTitle('')
+    setNewDueDate('')
+    setNewCourseId('')
     await refresh()
   }
 
@@ -68,14 +73,36 @@ export default function Tasks() {
       <PageHeader title="Tasks" subtitle={totalEstimateToday > 0 ? `~${Math.round(totalEstimateToday / 60 * 10) / 10}h planned today` : undefined} />
 
       <div className="px-4">
-        <form onSubmit={addTask} className="flex gap-2 mb-3">
-          <input
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            placeholder="Add a task…"
-            className="flex-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <button type="submit" className="rounded-xl bg-indigo-600 text-white px-4 text-sm font-medium">Add</button>
+        <form onSubmit={addTask} className="mb-3 space-y-2">
+          <div className="flex gap-2">
+            <input
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              placeholder="Add a task or assessment…"
+              className="flex-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <button type="submit" className="rounded-xl bg-indigo-600 text-white px-4 text-sm font-medium">Add</button>
+          </div>
+          <div className="flex gap-2">
+            <select
+              value={newCourseId}
+              onChange={(e) => setNewCourseId(e.target.value)}
+              className="flex-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-xs outline-none"
+            >
+              <option value="">No course</option>
+              {courses.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.code}
+                </option>
+              ))}
+            </select>
+            <input
+              type="date"
+              value={newDueDate}
+              onChange={(e) => setNewDueDate(e.target.value)}
+              className="flex-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-xs outline-none"
+            />
+          </div>
         </form>
 
         <div className="flex gap-2 mb-3 overflow-x-auto pb-1 -mx-1 px-1">
