@@ -1,0 +1,8 @@
+{
+  "installCommand": "cd school-tracker && npm install",
+  "buildCommand": "cd school-tracker && npm run build",
+  "outputDirectory": "school-tracker/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
