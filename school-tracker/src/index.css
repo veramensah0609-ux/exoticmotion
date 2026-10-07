@@ -8,11 +8,31 @@ html, body, #root {
   height: 100%;
 }
 
+html {
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  overscroll-behavior: none;
+  touch-action: pan-y;
+}
+
 body {
   background: #f6f7fb;
   color: #14151a;
   -webkit-tap-highlight-color: transparent;
-  overscroll-behavior-y: none;
+  overscroll-behavior: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  touch-action: pan-y;
+  width: 100%;
+}
+
+#root {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
 }
 
 .dark body {
