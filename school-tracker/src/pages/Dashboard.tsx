@@ -1,13 +1,15 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useData } from '../contexts/DataContext'
 import { Card, CourseDot, DueBadge, EmptyState, PageHeader } from '../components/shared'
 import { daysUntil, isOverdue } from '../lib/priority'
 import { supabase } from '../lib/supabase'
 import { format } from 'date-fns'
-import { Link } from 'react-router-dom'
+import AssessmentSheet from '../components/AssessmentSheet'
+import type { Assessment } from '../lib/types'
 
 export default function Dashboard() {
   const { courses, units, assessments, tasks, refresh } = useData()
+  const [selectedAssessment, setSelectedAssessment] = useState<Assessment | null>(null)
 
   const courseById = useMemo(() => Object.fromEntries(courses.map((c) => [c.id, c])), [courses])
 
@@ -73,14 +75,14 @@ export default function Dashboard() {
             <h2 className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2">Missing work</h2>
             <Card className="divide-y divide-black/5 dark:divide-white/10">
               {missingAssessments.map((a) => (
-                <div key={a.id} className="flex items-center gap-2.5 px-4 py-3">
+                <button key={a.id} onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-2.5 px-4 py-3 text-left">
                   <CourseDot color={courseById[a.course_id]?.color ?? '#888'} />
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium truncate">{a.title}</p>
                     <p className="text-xs opacity-50">{courseById[a.course_id]?.code}</p>
                   </div>
                   <DueBadge date={a.due_date} />
-                </div>
+                </button>
               ))}
             </Card>
           </section>
@@ -115,7 +117,7 @@ export default function Dashboard() {
             <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Assessments this week+</h2>
             <Card className="divide-y divide-black/5 dark:divide-white/10">
               {upcomingAssessments.map((a) => (
-                <Link to={`/grades/${a.course_id}`} key={a.id} className="flex items-center gap-2.5 px-4 py-3">
+                <button key={a.id} onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-2.5 px-4 py-3 text-left">
                   <CourseDot color={courseById[a.course_id]?.color ?? '#888'} />
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium truncate">{a.title}</p>
@@ -125,12 +127,14 @@ export default function Dashboard() {
                     </p>
                   </div>
                   <DueBadge date={a.due_date} />
-                </Link>
+                </button>
               ))}
             </Card>
           </section>
         )}
       </div>
+
+      {selectedAssessment && <AssessmentSheet assessment={selectedAssessment} onClose={() => setSelectedAssessment(null)} />}
     </div>
   )
 }
