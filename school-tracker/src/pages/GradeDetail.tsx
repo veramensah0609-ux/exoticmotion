@@ -281,9 +281,15 @@ function AddAssessmentForm({
   const [title, setTitle] = useState('')
   const [type, setType] = useState<AssessmentType>('assignment')
   const [category, setCategory] = useState('')
-  const [weight, setWeight] = useState('')
+  const [weightPoints, setWeightPoints] = useState('')
+  const [weightOutOf, setWeightOutOf] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [unitId, setUnitId] = useState('')
+
+  const weightPercent =
+    weightPoints !== '' && weightOutOf !== '' && Number(weightOutOf) > 0
+      ? (Number(weightPoints) / Number(weightOutOf)) * 100
+      : null
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -295,7 +301,7 @@ function AddAssessmentForm({
       title: title.trim(),
       type,
       category: category || null,
-      weight_percent: weight ? Number(weight) : null,
+      weight_percent: weightPercent,
       due_date: dueDate || null,
     })
     onDone()
@@ -316,10 +322,30 @@ function AddAssessmentForm({
           <option value="A">A</option>
         </select>
       </div>
-      <div className="grid grid-cols-2 gap-2">
-        <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Weight %" className="rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-2 text-xs outline-none" />
-        <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-2 text-xs outline-none" />
+      <div>
+        <p className="text-[11px] opacity-50 mb-1">Weight &mdash; worth how many of how many course points?</p>
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            min={0}
+            value={weightPoints}
+            onChange={(e) => setWeightPoints(e.target.value)}
+            placeholder="points"
+            className="w-20 rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-2 text-xs outline-none"
+          />
+          <span className="opacity-40 text-xs">/</span>
+          <input
+            type="number"
+            min={0}
+            value={weightOutOf}
+            onChange={(e) => setWeightOutOf(e.target.value)}
+            placeholder="out of"
+            className="w-20 rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-2 text-xs outline-none"
+          />
+          {weightPercent != null && <span className="ml-auto text-xs opacity-60">= {weightPercent.toFixed(1)}%</span>}
+        </div>
       </div>
+      <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-2 text-xs outline-none" />
       {units.length > 0 && (
         <select value={unitId} onChange={(e) => setUnitId(e.target.value)} className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-2 text-xs outline-none">
           <option value="">No unit</option>
