@@ -84,24 +84,30 @@ export default function Tasks() {
             <button type="submit" className="rounded-xl bg-indigo-600 text-white px-4 text-sm font-medium">Add</button>
           </div>
           <div className="flex gap-2">
-            <select
-              value={newCourseId}
-              onChange={(e) => setNewCourseId(e.target.value)}
-              className="flex-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-xs outline-none"
-            >
-              <option value="">No course</option>
-              {courses.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.code}
-                </option>
-              ))}
-            </select>
-            <input
-              type="date"
-              value={newDueDate}
-              onChange={(e) => setNewDueDate(e.target.value)}
-              className="flex-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-xs outline-none"
-            />
+            <label className="flex-1 text-xs space-y-1">
+              <span className="opacity-50">Course</span>
+              <select
+                value={newCourseId}
+                onChange={(e) => setNewCourseId(e.target.value)}
+                className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 outline-none"
+              >
+                <option value="">No course</option>
+                {courses.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.code}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="flex-1 text-xs space-y-1">
+              <span className="opacity-50">Due date</span>
+              <input
+                type="date"
+                value={newDueDate}
+                onChange={(e) => setNewDueDate(e.target.value)}
+                className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 outline-none"
+              />
+            </label>
           </div>
         </form>
 
