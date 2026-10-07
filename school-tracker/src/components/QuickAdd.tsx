@@ -55,38 +55,50 @@ export default function QuickAdd({
           className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <div className="grid grid-cols-2 gap-2">
-          <select
-            value={courseId}
-            onChange={(e) => setCourseId(e.target.value)}
-            className="rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
-          >
-            <option value="">No course</option>
-            {courses.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.code}
-              </option>
-            ))}
-          </select>
-          <input
-            type="number"
-            min={0}
-            value={estimate}
-            onChange={(e) => setEstimate(e.target.value)}
-            placeholder="mins"
-            className="rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
-          />
-          <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            className="rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
-          />
-          <input
-            type="time"
-            value={dueTime}
-            onChange={(e) => setDueTime(e.target.value)}
-            className="rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 text-xs outline-none"
-          />
+          <label className="text-xs space-y-1">
+            <span className="opacity-50">Course</span>
+            <select
+              value={courseId}
+              onChange={(e) => setCourseId(e.target.value)}
+              className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 outline-none"
+            >
+              <option value="">No course</option>
+              {courses.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.code}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="text-xs space-y-1">
+            <span className="opacity-50">Estimate (min)</span>
+            <input
+              type="number"
+              min={0}
+              value={estimate}
+              onChange={(e) => setEstimate(e.target.value)}
+              placeholder="mins"
+              className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 outline-none"
+            />
+          </label>
+          <label className="text-xs space-y-1">
+            <span className="opacity-50">Due date</span>
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 outline-none"
+            />
+          </label>
+          <label className="text-xs space-y-1">
+            <span className="opacity-50">Time (optional)</span>
+            <input
+              type="time"
+              value={dueTime}
+              onChange={(e) => setDueTime(e.target.value)}
+              className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-2 py-2.5 outline-none"
+            />
+          </label>
         </div>
         <div className="flex gap-2 pt-1">
           <button type="button" onClick={onClose} className="flex-1 rounded-xl py-2.5 text-sm font-medium bg-black/5 dark:bg-white/10">
