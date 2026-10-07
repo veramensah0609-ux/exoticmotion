@@ -87,9 +87,9 @@ export default function Courses() {
               disabled={importing}
               className="rounded-xl bg-indigo-600 text-white px-4 py-2.5 text-sm font-medium disabled:opacity-50"
             >
-              {importing ? 'Importing…' : 'Import my VSS Fall 2026 courses'}
+              {importing ? 'Importing…' : 'Import my 2026-27 courses'}
             </button>
-            <p className="text-[11px] opacity-40 px-6">Loads MCR3U1, SPH3U1, SBI3U1 & NBE3U with units and known assessment dates from your course outlines.</p>
+            <p className="text-[11px] opacity-40 px-6">Loads MCR3U1, SPH3U1, SBI3U1, NBE3U, BOH4M1 & SCH3U1 with units, weights, and known assessment dates from your course outlines.</p>
           </div>
         ) : (
           courses.map((c) => {

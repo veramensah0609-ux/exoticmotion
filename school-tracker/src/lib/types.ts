@@ -36,6 +36,7 @@ export interface Assessment {
   type: AssessmentType
   category: 'K' | 'T' | 'C' | 'A' | null
   weight_percent: number | null
+  due_time: string | null
   due_date: string | null
   drop_box_opens: string | null
   mark_earned: number | null

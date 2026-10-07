@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useData } from '../contexts/DataContext'
 import { supabase } from '../lib/supabase'
 import { Card, CourseDot, PageHeader } from '../components/shared'
-import { requestNotificationPermission } from '../lib/notifications'
+import { requestNotificationPermission, subscribeToPush } from '../lib/notifications'
 
 export default function Settings() {
   const { user } = useAuth()
@@ -11,6 +11,15 @@ export default function Settings() {
   const [permStatus, setPermStatus] = useState<NotificationPermission>(
     typeof Notification !== 'undefined' ? Notification.permission : 'denied',
   )
+  const [pushStatus, setPushStatus] = useState<'idle' | 'subscribing' | 'subscribed' | 'error' | 'unsupported'>('idle')
+
+  useEffect(() => {
+    if (permStatus !== 'granted' || !('serviceWorker' in navigator)) return
+    navigator.serviceWorker.ready
+      .then((reg) => reg.pushManager.getSubscription())
+      .then((sub) => setPushStatus(sub ? 'subscribed' : 'idle'))
+      .catch(() => setPushStatus('unsupported'))
+  }, [permStatus])
 
   async function ensureSettings() {
     if (notificationSettings || !user) return notificationSettings
@@ -34,7 +43,12 @@ export default function Settings() {
   async function enableNotifications() {
     const perm = await requestNotificationPermission()
     setPermStatus(perm)
-    if (perm === 'granted') await ensureSettings()
+    if (perm === 'granted' && user) {
+      await ensureSettings()
+      setPushStatus('subscribing')
+      const result = await subscribeToPush(user.id)
+      setPushStatus(result)
+    }
   }
 
   function exportBackup() {
@@ -55,15 +69,22 @@ export default function Settings() {
         <Card className="p-4">
           <p className="text-sm font-semibold mb-1">Notifications</p>
           <p className="text-xs opacity-50 mb-3">
-            {permStatus === 'granted'
-              ? 'Enabled on this device. You\'ll get reminders while the app is open or installed.'
-              : 'Enable to get due-soon reminders, test countdowns, and daily briefs on this device.'}
+            {permStatus === 'granted' && pushStatus === 'subscribed'
+              ? 'Push enabled on this device — you’ll get reminders even when the app is closed.'
+              : permStatus === 'granted' && pushStatus === 'unsupported'
+                ? 'Browser notifications on while open, but this browser doesn’t support background push. Install to your home screen on iOS to enable it.'
+                : 'Enable to get due-soon reminders, test countdowns, and daily briefs — even when the app is closed.'}
           </p>
-          {permStatus !== 'granted' && (
-            <button onClick={enableNotifications} className="w-full rounded-xl bg-indigo-600 text-white py-2.5 text-sm font-medium">
-              Enable notifications
+          {(permStatus !== 'granted' || (pushStatus !== 'subscribed' && pushStatus !== 'unsupported')) && (
+            <button
+              onClick={enableNotifications}
+              disabled={pushStatus === 'subscribing'}
+              className="w-full rounded-xl bg-indigo-600 text-white py-2.5 text-sm font-medium disabled:opacity-50"
+            >
+              {pushStatus === 'subscribing' ? 'Enabling…' : 'Enable notifications'}
             </button>
           )}
+          {pushStatus === 'error' && <p className="text-xs text-red-500 mt-2">Couldn’t finish setting up push. Try again, or check the browser allows notifications for this site.</p>}
         </Card>
 
         <Card className="p-4 space-y-3">
