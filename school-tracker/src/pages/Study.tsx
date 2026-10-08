@@ -13,16 +13,27 @@ export default function Study() {
   const [running, setRunning] = useState(false)
   const [seconds, setSeconds] = useState(0)
   const [sessionId, setSessionId] = useState<string | null>(null)
+  const startedAtRef = useRef<number | null>(null)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  function recomputeSeconds() {
+    if (startedAtRef.current != null) {
+      setSeconds(Math.round((Date.now() - startedAtRef.current) / 1000))
+    }
+  }
 
   useEffect(() => {
     if (running) {
-      intervalRef.current = setInterval(() => setSeconds((s) => s + 1), 1000)
+      intervalRef.current = setInterval(recomputeSeconds, 1000)
+      document.addEventListener('visibilitychange', recomputeSeconds)
+      window.addEventListener('focus', recomputeSeconds)
     } else if (intervalRef.current) {
       clearInterval(intervalRef.current)
     }
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
+      document.removeEventListener('visibilitychange', recomputeSeconds)
+      window.removeEventListener('focus', recomputeSeconds)
     }
   }, [running])
 
@@ -34,25 +45,29 @@ export default function Study() {
       .select()
       .single()
     setSessionId(data?.id ?? null)
+    startedAtRef.current = Date.now()
     setSeconds(0)
     setRunning(true)
   }
 
   async function stop() {
     setRunning(false)
+    const elapsedSeconds = startedAtRef.current != null ? Math.round((Date.now() - startedAtRef.current) / 1000) : seconds
     if (sessionId) {
+      const durationMinutes = Math.max(1, Math.round(elapsedSeconds / 60))
       await supabase
         .from('study_sessions')
-        .update({ ended_at: new Date().toISOString(), duration_minutes: Math.round(seconds / 60) })
+        .update({ ended_at: new Date().toISOString(), duration_minutes: durationMinutes })
         .eq('id', sessionId)
       await refresh()
     }
+    startedAtRef.current = null
     setSessionId(null)
     setSeconds(0)
   }
 
   const weekStart = startOfWeek(new Date())
-  const thisWeekSessions = studySessions.filter((s) => isAfter(new Date(s.started_at), weekStart) && s.duration_minutes)
+  const thisWeekSessions = studySessions.filter((s) => isAfter(new Date(s.started_at), weekStart) && s.duration_minutes != null)
   const minutesByCourse = useMemo(() => {
     const map: Record<string, number> = {}
     for (const s of thisWeekSessions) {
