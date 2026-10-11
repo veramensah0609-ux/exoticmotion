@@ -87,16 +87,27 @@ export default function AssessmentSheet({ assessment, onClose }: { assessment: A
         <div className="text-xs space-y-1">
           <span className="opacity-50">Status</span>
           <div className="flex gap-1">
-            {(['upcoming', 'missing', 'excused'] as AssessmentStatus[]).map((s) => (
+            {([
+              { s: 'upcoming', label: 'Upcoming' },
+              { s: 'done', label: 'Handed in' },
+              { s: 'missing', label: "Didn't do" },
+              { s: 'excused', label: 'Excused' },
+            ] as { s: AssessmentStatus; label: string }[]).map(({ s, label }) => (
               <button
                 key={s}
                 onClick={() => setStatus(s)}
                 disabled={saving}
-                className={`flex-1 rounded-lg py-1.5 text-[11px] font-medium capitalize ${
-                  assessment.status === s ? 'bg-red-500 text-white' : 'bg-black/5 dark:bg-white/10 opacity-60'
+                className={`flex-1 rounded-lg py-1.5 text-[11px] font-medium ${
+                  assessment.status === s
+                    ? s === 'missing'
+                      ? 'bg-red-500 text-white'
+                      : s === 'done'
+                      ? 'bg-emerald-500 text-white'
+                      : 'bg-indigo-600 text-white'
+                    : 'bg-black/5 dark:bg-white/10 opacity-60'
                 }`}
               >
-                {s}
+                {label}
               </button>
             ))}
           </div>
