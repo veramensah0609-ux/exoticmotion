@@ -32,7 +32,7 @@ export default function Dashboard() {
     .filter((a) => a.status !== 'done' && a.due_date && daysUntil(a.due_date)! >= 0 && daysUntil(a.due_date)! <= 10)
     .sort((a, b) => daysUntil(a.due_date)! - daysUntil(b.due_date)!)
 
-  const missingAssessments = assessments.filter((a) => a.status === 'missing' || (a.due_date && isOverdue(a.due_date) && a.status === 'upcoming'))
+  const missingAssessments = assessments.filter((a) => a.due_date && isOverdue(a.due_date) && a.status === 'upcoming')
 
   const nextTest = assessments
     .filter((a) => (a.type === 'test' || a.type === 'exam' || a.type === 'quiz') && a.due_date && daysUntil(a.due_date)! >= 0)
