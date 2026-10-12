@@ -27,16 +27,16 @@ export default function Layout() {
 
       {quickAddOpen && <QuickAdd onClose={() => setQuickAddOpen(false)} />}
 
-      <nav className="fixed bottom-0 inset-x-0 z-20 bg-white/85 dark:bg-[#0b0d12]/85 backdrop-blur border-t border-black/5 dark:border-white/10 pb-[env(safe-area-inset-bottom)]">
-        <div className="flex items-stretch max-w-lg mx-auto">
+      <nav className="fixed bottom-0 inset-x-0 z-20 px-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+        <div className="flex items-stretch max-w-lg mx-auto rounded-[28px] bg-white/90 dark:bg-zinc-900/90 backdrop-blur border border-black/5 dark:border-white/10 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.15)] px-1">
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
               end={to === '/'}
               className={({ isActive }) =>
-                `flex-1 flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-medium ${
-                  isActive ? 'text-zinc-600' : 'opacity-50'
+                `flex-1 flex flex-col items-center gap-0.5 py-2.5 my-1.5 rounded-2xl text-[10px] font-medium transition-colors ${
+                  isActive ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' : 'opacity-50'
                 }`
               }
             >
@@ -46,7 +46,11 @@ export default function Layout() {
           ))}
           <NavLink
             to="/more"
-            className={({ isActive }) => `flex-1 flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-medium ${isActive ? 'text-zinc-600' : 'opacity-50'}`}
+            className={({ isActive }) =>
+              `flex-1 flex flex-col items-center gap-0.5 py-2.5 my-1.5 rounded-2xl text-[10px] font-medium transition-colors ${
+                isActive ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' : 'opacity-50'
+              }`
+            }
           >
             <MoreIcon />
             More
