@@ -57,6 +57,14 @@ export function CourseDot({ color }: { color: string }) {
   return <span className="h-2 w-2 rounded-full shrink-0" style={{ background: color }} />
 }
 
+export function tint(color: string, alpha = 0.1): string {
+  const hex = color.replace('#', '')
+  const r = parseInt(hex.slice(0, 2), 16)
+  const g = parseInt(hex.slice(2, 4), 16)
+  const b = parseInt(hex.slice(4, 6), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 export function EmptyState({ text }: { text: string }) {
   return <p className="text-sm opacity-40 text-center py-8">{text}</p>
 }
