@@ -6,7 +6,7 @@ export function PageHeader({ title, subtitle, right }: { title: string; subtitle
   return (
     <div className="px-4 pt-[calc(1rem+env(safe-area-inset-top))] pb-3 flex items-start justify-between">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+        <h1 className="text-[28px] font-bold tracking-tight">{title}</h1>
         {subtitle && <p className="text-sm opacity-50 mt-0.5">{subtitle}</p>}
       </div>
       {right}
@@ -16,7 +16,10 @@ export function PageHeader({ title, subtitle, right }: { title: string; subtitle
 
 export function Card({ children, className = '', style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
   return (
-    <div style={style} className={`rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 ${className}`}>
+    <div
+      style={style}
+      className={`rounded-[28px] bg-white dark:bg-zinc-900/60 border border-black/5 dark:border-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.08)] dark:shadow-none ${className}`}
+    >
       {children}
     </div>
   )
