@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useData } from '../contexts/DataContext'
-import { Card, DueBadge, EmptyState, PageHeader, ProgressRing } from '../components/shared'
+import { Card, DueBadge, EmptyState, PageHeader, ProgressRing, tint } from '../components/shared'
 import { daysUntil, isOverdue } from '../lib/priority'
 import { supabase } from '../lib/supabase'
 import { format } from 'date-fns'
@@ -73,11 +73,14 @@ export default function Dashboard() {
           <section>
             <h2 className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2 px-1">Overdue ({overdueTasks.length})</h2>
             <div className="space-y-2">
-              {overdueTasks.map((t) => (
-                <Card key={t.id}>
-                  <TaskRow task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
-                </Card>
-              ))}
+              {overdueTasks.map((t) => {
+                const course = t.course_id ? courseById[t.course_id] : undefined
+                return (
+                  <Card key={t.id} style={course ? { background: tint(course.color) } : undefined}>
+                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
+                  </Card>
+                )
+              })}
             </div>
           </section>
         )}
@@ -86,18 +89,21 @@ export default function Dashboard() {
           <section>
             <h2 className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2 px-1">Missing work</h2>
             <div className="space-y-2">
-              {missingAssessments.map((a) => (
-                <Card key={a.id} className="overflow-hidden">
-                  <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
-                    <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: courseById[a.course_id]?.color ?? '#888' }} />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold truncate">{a.title}</p>
-                      <p className="text-xs opacity-50 mt-0.5">{courseById[a.course_id]?.code}</p>
-                    </div>
-                    <DueBadge date={a.due_date} />
-                  </button>
-                </Card>
-              ))}
+              {missingAssessments.map((a) => {
+                const color = courseById[a.course_id]?.color ?? '#888'
+                return (
+                  <Card key={a.id} className="overflow-hidden" style={{ background: tint(color) }}>
+                    <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
+                      <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: color }} />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-semibold truncate">{a.title}</p>
+                        <p className="text-xs opacity-50 mt-0.5">{courseById[a.course_id]?.code}</p>
+                      </div>
+                      <DueBadge date={a.due_date} />
+                    </button>
+                  </Card>
+                )
+              })}
             </div>
           </section>
         )}
@@ -110,11 +116,14 @@ export default function Dashboard() {
             </Card>
           ) : (
             <div className="space-y-2">
-              {todayTasks.map((t) => (
-                <Card key={t.id}>
-                  <TaskRow task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
-                </Card>
-              ))}
+              {todayTasks.map((t) => {
+                const course = t.course_id ? courseById[t.course_id] : undefined
+                return (
+                  <Card key={t.id} style={course ? { background: tint(course.color) } : undefined}>
+                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
+                  </Card>
+                )
+              })}
             </div>
           )}
         </section>
@@ -123,11 +132,14 @@ export default function Dashboard() {
           <section>
             <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2 px-1">Coming up</h2>
             <div className="space-y-2">
-              {upcomingTasks.map((t) => (
-                <Card key={t.id}>
-                  <TaskRow task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
-                </Card>
-              ))}
+              {upcomingTasks.map((t) => {
+                const course = t.course_id ? courseById[t.course_id] : undefined
+                return (
+                  <Card key={t.id} style={course ? { background: tint(course.color) } : undefined}>
+                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
+                  </Card>
+                )
+              })}
             </div>
           </section>
         )}
@@ -136,21 +148,24 @@ export default function Dashboard() {
           <section>
             <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2 px-1">Assessments this week+</h2>
             <div className="space-y-2">
-              {upcomingAssessments.map((a) => (
-                <Card key={a.id} className="overflow-hidden">
-                  <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
-                    <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: courseById[a.course_id]?.color ?? '#888' }} />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold truncate">{a.title}</p>
-                      <p className="text-xs opacity-50 mt-0.5">
-                        {courseById[a.course_id]?.code} · {a.type}
-                        {a.weight_percent ? ` · ${a.weight_percent}%` : ''}
-                      </p>
-                    </div>
-                    <DueBadge date={a.due_date} />
-                  </button>
-                </Card>
-              ))}
+              {upcomingAssessments.map((a) => {
+                const color = courseById[a.course_id]?.color ?? '#888'
+                return (
+                  <Card key={a.id} className="overflow-hidden" style={{ background: tint(color) }}>
+                    <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
+                      <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: color }} />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-semibold truncate">{a.title}</p>
+                        <p className="text-xs opacity-50 mt-0.5">
+                          {courseById[a.course_id]?.code} · {a.type}
+                          {a.weight_percent ? ` · ${a.weight_percent}%` : ''}
+                        </p>
+                      </div>
+                      <DueBadge date={a.due_date} />
+                    </button>
+                  </Card>
+                )
+              })}
             </div>
           </section>
         )}
