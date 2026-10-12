@@ -19,7 +19,7 @@ export default function Layout() {
 
       <button
         onClick={() => setQuickAddOpen(true)}
-        className="fixed right-4 bottom-20 z-30 h-14 w-14 rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-600/40 flex items-center justify-center text-2xl active:scale-95 transition"
+        className="fixed right-4 bottom-20 z-30 h-14 w-14 rounded-full bg-zinc-900 text-white shadow-lg shadow-zinc-900/40 flex items-center justify-center text-2xl active:scale-95 transition"
         aria-label="Quick add"
       >
         +
@@ -36,7 +36,7 @@ export default function Layout() {
               end={to === '/'}
               className={({ isActive }) =>
                 `flex-1 flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-medium ${
-                  isActive ? 'text-indigo-500' : 'opacity-50'
+                  isActive ? 'text-zinc-600' : 'opacity-50'
                 }`
               }
             >
@@ -46,7 +46,7 @@ export default function Layout() {
           ))}
           <NavLink
             to="/more"
-            className={({ isActive }) => `flex-1 flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-medium ${isActive ? 'text-indigo-500' : 'opacity-50'}`}
+            className={({ isActive }) => `flex-1 flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-medium ${isActive ? 'text-zinc-600' : 'opacity-50'}`}
           >
             <MoreIcon />
             More

@@ -79,7 +79,7 @@ export default function Settings() {
             <button
               onClick={enableNotifications}
               disabled={pushStatus === 'subscribing'}
-              className="w-full rounded-xl bg-indigo-600 text-white py-2.5 text-sm font-medium disabled:opacity-50"
+              className="w-full rounded-xl bg-zinc-900 text-white py-2.5 text-sm font-medium disabled:opacity-50"
             >
               {pushStatus === 'subscribing' ? 'Enabling…' : 'Enable notifications'}
             </button>
@@ -117,7 +117,7 @@ export default function Settings() {
             <p className="text-xs opacity-50">Today's tasks & overdue items, each morning</p>
             <button
               onClick={() => updateSetting('morning_brief_enabled', !(notificationSettings?.morning_brief_enabled ?? true))}
-              className={`h-6 w-11 rounded-full relative transition shrink-0 ${notificationSettings?.morning_brief_enabled ?? true ? 'bg-indigo-600' : 'bg-black/15'}`}
+              className={`h-6 w-11 rounded-full relative transition shrink-0 ${notificationSettings?.morning_brief_enabled ?? true ? 'bg-zinc-900' : 'bg-black/15'}`}
             >
               <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition ${notificationSettings?.morning_brief_enabled ?? true ? 'left-5' : 'left-0.5'}`} />
             </button>
@@ -132,7 +132,7 @@ export default function Settings() {
                 <span className="text-xs flex items-center gap-1.5"><CourseDot color={c.color} />{c.code}</span>
                 <button
                   onClick={() => toggleMute(c.id)}
-                  className={`h-5 w-9 rounded-full relative transition ${notificationSettings?.course_mutes?.[c.id] ? 'bg-black/20' : 'bg-indigo-600'}`}
+                  className={`h-5 w-9 rounded-full relative transition ${notificationSettings?.course_mutes?.[c.id] ? 'bg-black/20' : 'bg-zinc-900'}`}
                 >
                   <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition ${notificationSettings?.course_mutes?.[c.id] ? 'left-0.5' : 'left-4'}`} />
                 </button>
