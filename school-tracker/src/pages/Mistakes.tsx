@@ -48,7 +48,7 @@ export default function Mistakes() {
     if (unmastered.length === 0) {
       return (
         <div className="p-4">
-          <EmptyState text="No mistakes left to review. You're on top of it." />
+          <EmptyState icon="🏆" text="No mistakes left to review. You're on top of it." />
           <button onClick={() => setReviewMode(false)} className="w-full mt-3 rounded-xl bg-zinc-900 text-white py-2.5 text-sm font-medium">Back</button>
         </div>
       )
@@ -121,7 +121,7 @@ export default function Mistakes() {
 
         <Card className="divide-y divide-black/5 dark:divide-white/10">
           {mistakes.length === 0 ? (
-            <EmptyState text="No mistakes logged yet." />
+            <EmptyState icon="🧠" text="No mistakes logged yet." />
           ) : (
             mistakes.map((m) => (
               <div key={m.id} className="px-4 py-3 flex items-start gap-2.5">

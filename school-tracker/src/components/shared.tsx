@@ -65,8 +65,13 @@ export function tint(color: string, alpha = 0.1): string {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-export function EmptyState({ text }: { text: string }) {
-  return <p className="text-sm opacity-40 text-center py-8">{text}</p>
+export function EmptyState({ text, icon = '✨' }: { text: string; icon?: string }) {
+  return (
+    <div className="text-center py-10 px-4">
+      <div className="h-12 w-12 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-xl mx-auto mb-3">{icon}</div>
+      <p className="text-sm opacity-50">{text}</p>
+    </div>
+  )
 }
 
 export function ProgressRing({ done, total, size = 56 }: { done: number; total: number; size?: number }) {

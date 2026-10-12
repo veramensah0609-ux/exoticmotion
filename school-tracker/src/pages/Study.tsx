@@ -111,7 +111,7 @@ export default function Study() {
         <Card className="p-4">
           <p className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-3">This week · {Math.round(totalWeekMinutes / 60 * 10) / 10}h total</p>
           {Object.keys(minutesByCourse).length === 0 ? (
-            <EmptyState text="No study sessions logged yet." />
+            <EmptyState icon="⏱️" text="No study sessions logged yet." />
           ) : (
             <div className="space-y-2">
               {Object.entries(minutesByCourse)

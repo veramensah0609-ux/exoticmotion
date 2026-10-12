@@ -135,7 +135,7 @@ export default function Tasks() {
 
         <Card className="divide-y divide-black/5 dark:divide-white/10">
           {filtered.length === 0 ? (
-            <EmptyState text="No tasks here." />
+            <EmptyState icon="✅" text="No tasks here." />
           ) : (
             filtered.map((t) => {
               const subs = subtasksOf(t.id)

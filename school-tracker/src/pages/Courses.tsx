@@ -81,7 +81,7 @@ export default function Courses() {
 
         {courses.length === 0 ? (
           <div className="text-center py-8 space-y-3">
-            <EmptyState text="No courses yet." />
+            <EmptyState icon="📚" text="No courses yet." />
             <button
               onClick={doImport}
               disabled={importing}

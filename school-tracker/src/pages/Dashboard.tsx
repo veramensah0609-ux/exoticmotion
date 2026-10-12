@@ -112,7 +112,7 @@ export default function Dashboard() {
           <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2 px-1">Today ({todayTasks.length})</h2>
           {todayTasks.length === 0 ? (
             <Card>
-              <EmptyState text="Nothing due today. Nice." />
+              <EmptyState icon="🎉" text="Nothing due today. Nice." />
             </Card>
           ) : (
             <div className="space-y-2">
