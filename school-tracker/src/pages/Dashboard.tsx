@@ -10,8 +10,10 @@ import type { Assessment, Task } from '../lib/types'
 
 export default function Dashboard() {
   const { courses, units, assessments, tasks, refresh } = useData()
-  const [selectedAssessment, setSelectedAssessment] = useState<Assessment | null>(null)
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [selectedAssessmentId, setSelectedAssessmentId] = useState<string | null>(null)
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
+  const selectedAssessment = selectedAssessmentId ? assessments.find((a) => a.id === selectedAssessmentId) ?? null : null
+  const selectedTask = selectedTaskId ? tasks.find((t) => t.id === selectedTaskId) ?? null : null
 
   const courseById = useMemo(() => Object.fromEntries(courses.map((c) => [c.id, c])), [courses])
 
@@ -77,7 +79,7 @@ export default function Dashboard() {
                 const course = t.course_id ? courseById[t.course_id] : undefined
                 return (
                   <Card key={t.id}>
-                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
+                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={(selected) => setSelectedTaskId(selected.id)} />
                   </Card>
                 )
               })}
@@ -93,7 +95,7 @@ export default function Dashboard() {
                 const color = courseById[a.course_id]?.color ?? '#888'
                 return (
                   <Card key={a.id} className="overflow-hidden">
-                    <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
+                    <button onClick={() => setSelectedAssessmentId(a.id)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
                       <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: color }} />
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold truncate">{a.title}</p>
@@ -120,7 +122,7 @@ export default function Dashboard() {
                 const course = t.course_id ? courseById[t.course_id] : undefined
                 return (
                   <Card key={t.id}>
-                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
+                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={(selected) => setSelectedTaskId(selected.id)} />
                   </Card>
                 )
               })}
@@ -136,7 +138,7 @@ export default function Dashboard() {
                 const course = t.course_id ? courseById[t.course_id] : undefined
                 return (
                   <Card key={t.id}>
-                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
+                    <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={(selected) => setSelectedTaskId(selected.id)} />
                   </Card>
                 )
               })}
@@ -152,7 +154,7 @@ export default function Dashboard() {
                 const color = courseById[a.course_id]?.color ?? '#888'
                 return (
                   <Card key={a.id} className="overflow-hidden">
-                    <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
+                    <button onClick={() => setSelectedAssessmentId(a.id)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
                       <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: color }} />
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold truncate">{a.title}</p>
@@ -171,8 +173,8 @@ export default function Dashboard() {
         )}
       </div>
 
-      {selectedAssessment && <AssessmentSheet assessment={selectedAssessment} onClose={() => setSelectedAssessment(null)} />}
-      {selectedTask && <TaskSheet task={selectedTask} onClose={() => setSelectedTask(null)} />}
+      {selectedAssessment && <AssessmentSheet assessment={selectedAssessment} onClose={() => setSelectedAssessmentId(null)} />}
+      {selectedTask && <TaskSheet task={selectedTask} onClose={() => setSelectedTaskId(null)} />}
     </div>
   )
 }

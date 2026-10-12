@@ -17,7 +17,6 @@ import TimelineDay from '../components/TimelineDay'
 import AssessmentSheet from '../components/AssessmentSheet'
 import TaskSheet from '../components/TaskSheet'
 import QuickAdd from '../components/QuickAdd'
-import type { Assessment, Task } from '../lib/types'
 
 type ViewMode = 'month' | 'day'
 
@@ -26,9 +25,11 @@ export default function CalendarPage() {
   const [view, setView] = useState<ViewMode>('month')
   const [cursor, setCursor] = useState(new Date())
   const [selected, setSelected] = useState<Date>(new Date())
-  const [selectedAssessment, setSelectedAssessment] = useState<Assessment | null>(null)
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [selectedAssessmentId, setSelectedAssessmentId] = useState<string | null>(null)
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [quickAdd, setQuickAdd] = useState<{ date: string; time: string } | null>(null)
+  const selectedAssessment = selectedAssessmentId ? assessments.find((a) => a.id === selectedAssessmentId) ?? null : null
+  const selectedTask = selectedTaskId ? tasks.find((t) => t.id === selectedTaskId) ?? null : null
 
   const courseById = useMemo(() => Object.fromEntries(courses.map((c) => [c.id, c])), [courses])
 
@@ -141,14 +142,14 @@ export default function CalendarPage() {
           tasks={tasks}
           assessments={assessments}
           courseById={courseById}
-          onSelectTask={setSelectedTask}
-          onSelectAssessment={setSelectedAssessment}
+          onSelectTask={(t) => setSelectedTaskId(t.id)}
+          onSelectAssessment={(a) => setSelectedAssessmentId(a.id)}
           onCreateAtTime={(date, time) => setQuickAdd({ date, time })}
         />
       </div>
 
-      {selectedAssessment && <AssessmentSheet assessment={selectedAssessment} onClose={() => setSelectedAssessment(null)} />}
-      {selectedTask && <TaskSheet task={selectedTask} onClose={() => setSelectedTask(null)} />}
+      {selectedAssessment && <AssessmentSheet assessment={selectedAssessment} onClose={() => setSelectedAssessmentId(null)} />}
+      {selectedTask && <TaskSheet task={selectedTask} onClose={() => setSelectedTaskId(null)} />}
       {quickAdd && (
         <QuickAdd defaultDate={quickAdd.date} defaultTime={quickAdd.time} onClose={() => setQuickAdd(null)} />
       )}
