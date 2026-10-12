@@ -352,7 +352,7 @@ function AddAssessmentForm({
           {units.map((u) => <option key={u.id} value={u.id}>{u.name}</option>)}
         </select>
       )}
-      <button type="submit" className="w-full rounded-lg bg-zinc-900 text-white py-2 text-sm font-medium">Save</button>
+      <button type="submit" className="w-full rounded-lg bg-neutral-900 text-white py-2 text-sm font-medium">Save</button>
     </form>
   )
 }

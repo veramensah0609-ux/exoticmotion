@@ -141,7 +141,7 @@ export default function TaskSheet({ task, onClose }: { task: Task; onClose: () =
           >
             {task.completed ? 'Mark incomplete' : 'Mark done'}
           </button>
-          <button onClick={save} disabled={saving || !title.trim()} className="flex-1 rounded-xl py-2.5 text-sm font-medium bg-zinc-900 text-white disabled:opacity-50">
+          <button onClick={save} disabled={saving || !title.trim()} className="flex-1 rounded-xl py-2.5 text-sm font-medium bg-neutral-900 text-white disabled:opacity-50">
             Save
           </button>
         </div>

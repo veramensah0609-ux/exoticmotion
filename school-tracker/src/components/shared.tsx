@@ -18,7 +18,7 @@ export function Card({ children, className = '', style }: { children: ReactNode;
   return (
     <div
       style={style}
-      className={`rounded-[28px] bg-white dark:bg-zinc-900/60 border border-black/5 dark:border-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.08)] dark:shadow-none ${className}`}
+      className={`rounded-[28px] bg-white dark:bg-neutral-900/60 border border-black/5 dark:border-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.08)] dark:shadow-none ${className}`}
     >
       {children}
     </div>
@@ -93,7 +93,7 @@ export function ProgressRing({ done, total, size = 56 }: { done: number; total: 
           strokeLinecap="round"
           strokeDasharray={c}
           strokeDashoffset={offset}
-          className="stroke-zinc-900 dark:stroke-white transition-all duration-500"
+          className="stroke-neutral-900 dark:stroke-white transition-all duration-500"
         />
       </svg>
       <span className="absolute inset-0 flex items-center justify-center text-[13px] font-bold tabular-nums">{pct}%</span>

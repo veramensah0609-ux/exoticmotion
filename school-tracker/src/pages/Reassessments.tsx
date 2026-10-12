@@ -55,7 +55,7 @@ export default function Reassessments() {
           )}
           <input type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-xs outline-none" />
           <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Notes (what was agreed)" rows={2} className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-sm outline-none resize-none" />
-          <button type="submit" disabled={!courseId} className="w-full rounded-lg bg-zinc-900 text-white py-2 text-sm font-medium disabled:opacity-50">Log request</button>
+          <button type="submit" disabled={!courseId} className="w-full rounded-lg bg-neutral-900 text-white py-2 text-sm font-medium disabled:opacity-50">Log request</button>
         </form>
 
         <Card className="divide-y divide-black/5 dark:divide-white/10">
@@ -78,7 +78,7 @@ export default function Reassessments() {
                       <button
                         key={s}
                         onClick={() => setStatus(r.id, s)}
-                        className={`text-[10px] px-2 py-1 rounded-full capitalize font-medium ${r.status === s ? 'bg-zinc-900 text-white' : 'bg-black/5 dark:bg-white/10 opacity-60'}`}
+                        className={`text-[10px] px-2 py-1 rounded-full capitalize font-medium ${r.status === s ? 'bg-neutral-900 text-white' : 'bg-black/5 dark:bg-white/10 opacity-60'}`}
                       >
                         {s}
                       </button>

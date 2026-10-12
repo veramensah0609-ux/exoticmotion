@@ -110,7 +110,7 @@ export default function CalendarPage() {
                     key={key}
                     onClick={() => pickDay(d)}
                     className={`aspect-square rounded-xl flex flex-col items-center justify-center gap-0.5 text-xs relative ${
-                      isSelected ? 'bg-zinc-900 text-white' : isToday ? 'bg-zinc-600/10 font-semibold' : ''
+                      isSelected ? 'bg-neutral-900 text-white' : isToday ? 'bg-neutral-600/10 font-semibold' : ''
                     } ${!inMonth ? 'opacity-30' : ''}`}
                   >
                     <span>{format(d, 'd')}</span>

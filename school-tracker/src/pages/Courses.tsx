@@ -63,7 +63,7 @@ export default function Courses() {
 
   return (
     <div>
-      <PageHeader title="Courses" right={<button onClick={() => setAdding((a) => !a)} className="text-xs font-medium bg-zinc-900 text-white px-3 py-1.5 rounded-full">{adding ? 'Cancel' : '+ Add'}</button>} />
+      <PageHeader title="Courses" right={<button onClick={() => setAdding((a) => !a)} className="text-xs font-medium bg-neutral-900 text-white px-3 py-1.5 rounded-full">{adding ? 'Cancel' : '+ Add'}</button>} />
 
       <div className="px-4 space-y-3">
         {adding && (
@@ -75,7 +75,7 @@ export default function Courses() {
                 <button type="button" key={c} onClick={() => setColor(c)} className="h-7 w-7 rounded-full" style={{ background: c, outline: color === c ? '2px solid white' : 'none', outlineOffset: 2, boxShadow: color === c ? '0 0 0 2px ' + c : 'none' }} />
               ))}
             </div>
-            <button type="submit" className="w-full rounded-lg bg-zinc-900 text-white py-2 text-sm font-medium">Add course</button>
+            <button type="submit" className="w-full rounded-lg bg-neutral-900 text-white py-2 text-sm font-medium">Add course</button>
           </form>
         )}
 
@@ -85,7 +85,7 @@ export default function Courses() {
             <button
               onClick={doImport}
               disabled={importing}
-              className="rounded-xl bg-zinc-900 text-white px-4 py-2.5 text-sm font-medium disabled:opacity-50"
+              className="rounded-xl bg-neutral-900 text-white px-4 py-2.5 text-sm font-medium disabled:opacity-50"
             >
               {importing ? 'Importing…' : 'Import my 2026-27 courses'}
             </button>
@@ -101,8 +101,8 @@ export default function Courses() {
                   <button
                     key={c.id}
                     onClick={() => setExpanded(isSelected ? null : c.id)}
-                    className={`relative rounded-[24px] p-4 text-left aspect-square flex flex-col justify-between overflow-hidden bg-white dark:bg-zinc-900/60 border border-black/5 dark:border-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.08)] transition-transform active:scale-[0.97] ${
-                      isSelected ? 'ring-4 ring-offset-2 ring-offset-[#f0f0f2] dark:ring-offset-[#0b0d12]' : ''
+                    className={`relative rounded-[24px] p-4 text-left aspect-square flex flex-col justify-between overflow-hidden bg-white dark:bg-neutral-900/60 border border-black/5 dark:border-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.08)] transition-transform active:scale-[0.97] ${
+                      isSelected ? 'ring-4 ring-offset-2 ring-offset-[#f0f0f2] dark:ring-offset-[#0a0a0a]' : ''
                     }`}
                     style={{ ['--tw-ring-color' as string]: c.color }}
                   >
@@ -147,7 +147,7 @@ export default function Courses() {
                       ))}
                       <div className="flex gap-2">
                         <input value={unitDraft} onChange={(e) => setUnitDraft(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addUnit(c.id)} placeholder="Add unit" className="flex-1 rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-1.5 text-xs outline-none" />
-                        <button onClick={() => addUnit(c.id)} className="text-xs font-medium text-zinc-600 px-2">Add</button>
+                        <button onClick={() => addUnit(c.id)} className="text-xs font-medium text-neutral-600 px-2">Add</button>
                       </div>
                     </div>
                   </div>

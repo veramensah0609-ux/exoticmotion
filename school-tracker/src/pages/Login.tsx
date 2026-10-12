@@ -32,10 +32,10 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-dvh flex items-center justify-center px-4 bg-gradient-to-b from-zinc-900/10 to-transparent">
+    <div className="min-h-dvh flex items-center justify-center px-4 bg-gradient-to-b from-neutral-900/10 to-transparent">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="mx-auto mb-3 h-14 w-14 rounded-2xl bg-zinc-900 flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-zinc-900/30">
+          <div className="mx-auto mb-3 h-14 w-14 rounded-2xl bg-neutral-900 flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-neutral-900/30">
             S
           </div>
           <h1 className="text-2xl font-bold tracking-tight">School Tracker</h1>
@@ -50,7 +50,7 @@ export default function Login() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-black/30 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-zinc-600"
+              className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-black/30 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-neutral-600"
               placeholder="you@example.com"
             />
           </div>
@@ -62,7 +62,7 @@ export default function Login() {
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-black/30 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-zinc-600"
+              className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-black/30 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-neutral-600"
               placeholder="••••••••"
             />
           </div>
@@ -71,7 +71,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded-xl bg-zinc-900 text-white font-medium py-2.5 text-sm hover:bg-zinc-600 transition disabled:opacity-50"
+            className="w-full rounded-xl bg-neutral-900 text-white font-medium py-2.5 text-sm hover:bg-neutral-600 transition disabled:opacity-50"
           >
             {busy ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'}
           </button>

@@ -19,7 +19,7 @@ export default function Layout() {
 
       <button
         onClick={() => setQuickAddOpen(true)}
-        className="fixed right-4 bottom-20 z-30 h-14 w-14 rounded-full bg-zinc-900 text-white shadow-lg shadow-zinc-900/40 flex items-center justify-center text-2xl active:scale-95 transition"
+        className="fixed right-4 bottom-20 z-30 h-14 w-14 rounded-full bg-neutral-900 text-white shadow-lg shadow-neutral-900/40 flex items-center justify-center text-2xl active:scale-95 transition"
         aria-label="Quick add"
       >
         +
@@ -28,7 +28,7 @@ export default function Layout() {
       {quickAddOpen && <QuickAdd onClose={() => setQuickAddOpen(false)} />}
 
       <nav className="fixed bottom-0 inset-x-0 z-20 px-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
-        <div className="flex items-stretch max-w-lg mx-auto rounded-[28px] bg-white/90 dark:bg-zinc-900/90 backdrop-blur border border-black/5 dark:border-white/10 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.15)] px-1">
+        <div className="flex items-stretch max-w-lg mx-auto rounded-[28px] bg-white/90 dark:bg-neutral-900/90 backdrop-blur border border-black/5 dark:border-white/10 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.15)] px-1">
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
@@ -36,7 +36,7 @@ export default function Layout() {
               end={to === '/'}
               className={({ isActive }) =>
                 `flex-1 flex flex-col items-center gap-0.5 py-2.5 my-1.5 rounded-2xl text-[10px] font-medium transition-colors ${
-                  isActive ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' : 'opacity-50'
+                  isActive ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900' : 'opacity-50'
                 }`
               }
             >
@@ -48,7 +48,7 @@ export default function Layout() {
             to="/more"
             className={({ isActive }) =>
               `flex-1 flex flex-col items-center gap-0.5 py-2.5 my-1.5 rounded-2xl text-[10px] font-medium transition-colors ${
-                isActive ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' : 'opacity-50'
+                isActive ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900' : 'opacity-50'
               }`
             }
           >
