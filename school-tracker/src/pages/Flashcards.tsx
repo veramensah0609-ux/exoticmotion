@@ -59,7 +59,7 @@ export default function Flashcards() {
 
   if (studyDeck) {
     const cards = flashcards.filter((f) => f.deck === studyDeck)
-    if (cards.length === 0) return <div className="p-4"><EmptyState text="No cards in this deck." /></div>
+    if (cards.length === 0) return <div className="p-4"><EmptyState icon="🗂️" text="No cards in this deck." /></div>
     const card = cards[idx % cards.length]
     return (
       <div className="p-4 min-h-dvh flex flex-col">
@@ -104,7 +104,7 @@ export default function Flashcards() {
         </form>
 
         {decks.length === 0 ? (
-          <EmptyState text="No flashcards yet." />
+          <EmptyState icon="🗂️" text="No flashcards yet." />
         ) : (
           decks.map((d) => {
             const cards = flashcards.filter((f) => f.deck === d)

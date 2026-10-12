@@ -25,7 +25,7 @@ export default function GradeDetail() {
   const courseAssessments = useMemo(() => assessments.filter((a) => a.course_id === courseId), [assessments, courseId])
   const courseUnits = useMemo(() => units.filter((u) => u.course_id === courseId), [units, courseId])
 
-  if (!course) return <div className="p-4"><EmptyState text="Course not found." /></div>
+  if (!course) return <div className="p-4"><EmptyState icon="❓" text="Course not found." /></div>
 
   const result = computeCourseGrade(course, courseAssessments)
   const target = computeTargetNeeded(courseAssessments, targetPct)
@@ -142,7 +142,7 @@ export default function GradeDetail() {
             {adding && <AddAssessmentForm courseId={course.id} userId={user!.id} units={courseUnits} onDone={() => { setAdding(false); refresh() }} />}
             <Card className="divide-y divide-black/5 dark:divide-white/10">
               {courseAssessments.length === 0 ? (
-                <EmptyState text="No assessments yet." />
+                <EmptyState icon="🎯" text="No assessments yet." />
               ) : (
                 courseAssessments.map((a) => (
                   <div key={a.id} className="px-4 py-3">
@@ -247,7 +247,7 @@ export default function GradeDetail() {
         {tab === 'trend' && (
           <Card className="p-4">
             {trendData.length === 0 ? (
-              <EmptyState text="Log marks to see your trend." />
+              <EmptyState icon="📈" text="Log marks to see your trend." />
             ) : (
               <ResponsiveContainer width="100%" height={220}>
                 <LineChart data={trendData}>

@@ -60,7 +60,7 @@ export default function Reassessments() {
 
         <Card className="divide-y divide-black/5 dark:divide-white/10">
           {reassessments.length === 0 ? (
-            <EmptyState text="No reassessment requests logged." />
+            <EmptyState icon="📝" text="No reassessment requests logged." />
           ) : (
             reassessments.map((r) => {
               const course = courses.find((c) => c.id === r.course_id)

@@ -12,7 +12,7 @@ export default function Grades() {
       <div className="px-4">
         <Card className="divide-y divide-black/5 dark:divide-white/10">
           {courses.length === 0 ? (
-            <EmptyState text="Add a course to get started." />
+            <EmptyState icon="📚" text="Add a course to get started." />
           ) : (
             courses.map((c) => {
               const result = computeCourseGrade(c, assessments.filter((a) => a.course_id === c.id))
