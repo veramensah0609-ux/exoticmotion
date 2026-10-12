@@ -6,7 +6,7 @@ import { supabase } from '../lib/supabase'
 import { format } from 'date-fns'
 import AssessmentSheet from '../components/AssessmentSheet'
 import TaskSheet from '../components/TaskSheet'
-import type { Assessment, Task } from '../lib/types'
+import type { Task } from '../lib/types'
 
 export default function Dashboard() {
   const { courses, units, assessments, tasks, refresh } = useData()
