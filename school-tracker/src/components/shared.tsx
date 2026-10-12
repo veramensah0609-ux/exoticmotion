@@ -60,3 +60,30 @@ export function CourseDot({ color }: { color: string }) {
 export function EmptyState({ text }: { text: string }) {
   return <p className="text-sm opacity-40 text-center py-8">{text}</p>
 }
+
+export function ProgressRing({ done, total, size = 56 }: { done: number; total: number; size?: number }) {
+  const pct = total > 0 ? Math.round((done / total) * 100) : 100
+  const stroke = 5
+  const r = (size - stroke) / 2
+  const c = 2 * Math.PI * r
+  const offset = c - (pct / 100) * c
+  return (
+    <div className="relative shrink-0" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" strokeWidth={stroke} className="stroke-black/10 dark:stroke-white/15" />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={c}
+          strokeDashoffset={offset}
+          className="stroke-zinc-900 dark:stroke-white transition-all duration-500"
+        />
+      </svg>
+      <span className="absolute inset-0 flex items-center justify-center text-[13px] font-bold tabular-nums">{pct}%</span>
+    </div>
+  )
+}

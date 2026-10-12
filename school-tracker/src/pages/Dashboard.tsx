@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useData } from '../contexts/DataContext'
-import { Card, DueBadge, EmptyState, PageHeader } from '../components/shared'
+import { Card, DueBadge, EmptyState, PageHeader, ProgressRing } from '../components/shared'
 import { daysUntil, isOverdue } from '../lib/priority'
 import { supabase } from '../lib/supabase'
 import { format } from 'date-fns'
@@ -17,6 +17,10 @@ export default function Dashboard() {
 
   const overdueTasks = tasks.filter((t) => !t.completed && isOverdue(t.due_date))
   const todayTasks = tasks.filter((t) => !t.completed && daysUntil(t.due_date) === 0)
+  const allTasksDueToday = tasks.filter((t) => daysUntil(t.due_date) === 0)
+  const allAssessmentsDueToday = assessments.filter((a) => daysUntil(a.due_date) === 0)
+  const doneToday = allTasksDueToday.filter((t) => t.completed).length + allAssessmentsDueToday.filter((a) => a.status === 'done').length
+  const totalToday = allTasksDueToday.length + allAssessmentsDueToday.length
   const upcomingTasks = tasks
     .filter((t) => !t.completed && !isOverdue(t.due_date) && daysUntil(t.due_date) !== 0 && daysUntil(t.due_date) !== null)
     .sort((a, b) => (daysUntil(a.due_date)! - daysUntil(b.due_date)!))
@@ -43,7 +47,11 @@ export default function Dashboard() {
 
   return (
     <div>
-      <PageHeader title="Today" subtitle={format(new Date(), 'EEEE, MMMM d')} />
+      <PageHeader
+        title="Today"
+        subtitle={format(new Date(), 'EEEE, MMMM d')}
+        right={totalToday > 0 ? <ProgressRing done={doneToday} total={totalToday} /> : undefined}
+      />
 
       <div className="px-4 space-y-4">
         {nextTest && (
