@@ -92,61 +92,85 @@ export default function Courses() {
             <p className="text-[11px] opacity-40 px-6">Loads MCR3U1, SPH3U1, SBI3U1, NBE3U, BOH4M1 & SCH3U1 with units, weights, and known assessment dates from your course outlines.</p>
           </div>
         ) : (
-          courses.map((c) => {
-            const courseUnits = units.filter((u) => u.course_id === c.id)
-            const isExpanded = expanded === c.id
-            return (
-              <Card key={c.id} className="overflow-hidden">
-                <div
-                  className="flex items-center gap-3 px-4 py-4"
-                  style={{ background: `linear-gradient(135deg, ${c.color}, ${c.color}cc)` }}
-                >
-                  <button className="min-w-0 flex-1 text-left" onClick={() => setExpanded(isExpanded ? null : c.id)}>
-                    <p className="text-xl font-bold text-white tracking-tight">{c.code}</p>
-                    <p className="text-xs text-white/85 mt-0.5 truncate">{c.name} · {courseUnits.length} units</p>
-                  </button>
-                  <button onClick={() => removeCourse(c.id)} className="h-7 w-7 rounded-full bg-black/15 text-white flex items-center justify-center text-xs shrink-0">✕</button>
-                </div>
-
-                {isExpanded && (
-                  <div className="px-4 pb-4 pt-4 space-y-4">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Units</p>
-                      <div className="space-y-1.5">
-                        {courseUnits.map((u) => (
-                          <div key={u.id} className="flex items-center gap-2 text-sm">
-                            <span className="flex-1">{u.name}</span>
-                            <button onClick={() => removeUnit(u.id)} className="opacity-30 hover:opacity-70 text-xs">✕</button>
-                          </div>
-                        ))}
-                        <div className="flex gap-2">
-                          <input value={unitDraft} onChange={(e) => setUnitDraft(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addUnit(c.id)} placeholder="Add unit" className="flex-1 rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-1.5 text-xs outline-none" />
-                          <button onClick={() => addUnit(c.id)} className="text-xs font-medium text-zinc-600 px-2">Add</button>
-                        </div>
-                      </div>
+          <>
+            <div className="grid grid-cols-2 gap-3">
+              {courses.map((c) => {
+                const courseUnits = units.filter((u) => u.course_id === c.id)
+                const isSelected = expanded === c.id
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => setExpanded(isSelected ? null : c.id)}
+                    className={`relative rounded-[24px] p-4 text-left aspect-square flex flex-col justify-between overflow-hidden shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)] transition-transform active:scale-[0.97] ${
+                      isSelected ? 'ring-4 ring-offset-2 ring-offset-[#f0f0f2] dark:ring-offset-[#0b0d12]' : ''
+                    }`}
+                    style={{ background: `linear-gradient(150deg, ${c.color}, ${c.color}99)`, ['--tw-ring-color' as string]: c.color }}
+                  >
+                    <div className="h-8 w-8 rounded-full bg-white/25 flex items-center justify-center text-[11px] font-bold text-white shrink-0">
+                      {c.code.slice(0, 2)}
                     </div>
-
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Term structure</p>
-                      <div className="grid grid-cols-3 gap-2 text-xs">
-                        {(['term_work', 'exam', 'attendance'] as const).map((field) => (
-                          <label key={field} className="space-y-1">
-                            <span className="opacity-50 capitalize">{field.replace('_', ' ')}</span>
-                            <input
-                              type="number"
-                              defaultValue={c.term_structure[field]}
-                              onBlur={(e) => updateWeights(c.id, field, Number(e.target.value), c.term_structure)}
-                              className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-1.5 outline-none"
-                            />
-                          </label>
-                        ))}
+                      <p className="text-base font-bold text-white tracking-tight leading-tight">{c.code}</p>
+                      <p className="text-[11px] text-white/80 mt-0.5 line-clamp-2">{c.name}</p>
+                      <span className="inline-block mt-2 text-[10px] font-medium text-white/90 bg-black/15 rounded-full px-2 py-0.5">
+                        {courseUnits.length} units
+                      </span>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+
+            {expanded && (() => {
+              const c = courses.find((x) => x.id === expanded)
+              if (!c) return null
+              const courseUnits = units.filter((u) => u.course_id === c.id)
+              return (
+                <Card className="p-4 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-bold">{c.name}</p>
+                      <p className="text-xs opacity-50">{c.code}</p>
+                    </div>
+                    <button onClick={() => removeCourse(c.id)} className="h-7 w-7 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-xs shrink-0">✕</button>
+                  </div>
+
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Units</p>
+                    <div className="space-y-1.5">
+                      {courseUnits.map((u) => (
+                        <div key={u.id} className="flex items-center gap-2 text-sm">
+                          <span className="flex-1">{u.name}</span>
+                          <button onClick={() => removeUnit(u.id)} className="opacity-30 hover:opacity-70 text-xs">✕</button>
+                        </div>
+                      ))}
+                      <div className="flex gap-2">
+                        <input value={unitDraft} onChange={(e) => setUnitDraft(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addUnit(c.id)} placeholder="Add unit" className="flex-1 rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-1.5 text-xs outline-none" />
+                        <button onClick={() => addUnit(c.id)} className="text-xs font-medium text-zinc-600 px-2">Add</button>
                       </div>
                     </div>
                   </div>
-                )}
-              </Card>
-            )
-          })
+
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Term structure</p>
+                    <div className="grid grid-cols-3 gap-2 text-xs">
+                      {(['term_work', 'exam', 'attendance'] as const).map((field) => (
+                        <label key={field} className="space-y-1">
+                          <span className="opacity-50 capitalize">{field.replace('_', ' ')}</span>
+                          <input
+                            type="number"
+                            defaultValue={c.term_structure[field]}
+                            onBlur={(e) => updateWeights(c.id, field, Number(e.target.value), c.term_structure)}
+                            className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-1.5 outline-none"
+                          />
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              )
+            })()}
+          </>
         )}
       </div>
     </div>
