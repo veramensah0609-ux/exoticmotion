@@ -96,18 +96,20 @@ export default function Courses() {
             const courseUnits = units.filter((u) => u.course_id === c.id)
             const isExpanded = expanded === c.id
             return (
-              <Card key={c.id} className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-xl flex items-center justify-center text-xs font-bold text-white shrink-0" style={{ background: c.color }}>{c.code.slice(0, 2)}</div>
+              <Card key={c.id} className="overflow-hidden">
+                <div
+                  className="flex items-center gap-3 px-4 py-4"
+                  style={{ background: `linear-gradient(135deg, ${c.color}, ${c.color}cc)` }}
+                >
                   <button className="min-w-0 flex-1 text-left" onClick={() => setExpanded(isExpanded ? null : c.id)}>
-                    <p className="text-sm font-semibold">{c.name}</p>
-                    <p className="text-xs opacity-50">{c.code} · {courseUnits.length} units</p>
+                    <p className="text-xl font-bold text-white tracking-tight">{c.code}</p>
+                    <p className="text-xs text-white/85 mt-0.5 truncate">{c.name} · {courseUnits.length} units</p>
                   </button>
-                  <button onClick={() => removeCourse(c.id)} className="opacity-30 hover:opacity-70 text-xs px-1">✕</button>
+                  <button onClick={() => removeCourse(c.id)} className="h-7 w-7 rounded-full bg-black/15 text-white flex items-center justify-center text-xs shrink-0">✕</button>
                 </div>
 
                 {isExpanded && (
-                  <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/10 space-y-4">
+                  <div className="px-4 pb-4 pt-4 space-y-4">
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Units</p>
                       <div className="space-y-1.5">
