@@ -103,7 +103,7 @@ export default function AssessmentSheet({ assessment, onClose }: { assessment: A
                       ? 'bg-red-500 text-white'
                       : s === 'done'
                       ? 'bg-emerald-500 text-white'
-                      : 'bg-indigo-600 text-white'
+                      : 'bg-zinc-900 text-white'
                     : 'bg-black/5 dark:bg-white/10 opacity-60'
                 }`}
               >
@@ -146,7 +146,7 @@ export default function AssessmentSheet({ assessment, onClose }: { assessment: A
           <button
             onClick={saveMark}
             disabled={saving}
-            className="flex-1 rounded-xl py-2.5 text-sm font-medium bg-indigo-600 text-white disabled:opacity-50"
+            className="flex-1 rounded-xl py-2.5 text-sm font-medium bg-zinc-900 text-white disabled:opacity-50"
           >
             Save
           </button>

@@ -52,7 +52,7 @@ export default function QuickAdd({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="What do you need to do?"
-          className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-zinc-600"
         />
         <div className="grid grid-cols-2 gap-2">
           <label className="text-xs space-y-1">
@@ -107,7 +107,7 @@ export default function QuickAdd({
           <button
             type="submit"
             disabled={busy || !title.trim()}
-            className="flex-1 rounded-xl py-2.5 text-sm font-medium bg-indigo-600 text-white disabled:opacity-50"
+            className="flex-1 rounded-xl py-2.5 text-sm font-medium bg-zinc-900 text-white disabled:opacity-50"
           >
             Add
           </button>

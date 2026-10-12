@@ -49,7 +49,7 @@ export default function Mistakes() {
       return (
         <div className="p-4">
           <EmptyState text="No mistakes left to review. You're on top of it." />
-          <button onClick={() => setReviewMode(false)} className="w-full mt-3 rounded-xl bg-indigo-600 text-white py-2.5 text-sm font-medium">Back</button>
+          <button onClick={() => setReviewMode(false)} className="w-full mt-3 rounded-xl bg-zinc-900 text-white py-2.5 text-sm font-medium">Back</button>
         </div>
       )
     }
@@ -71,7 +71,7 @@ export default function Mistakes() {
             <p className="text-sm opacity-60 mt-4 pt-4 border-t border-black/10 dark:border-white/10">{m.why_wrong}</p>
           )}
           {!revealed ? (
-            <button onClick={() => setRevealed(true)} className="mt-6 text-sm font-medium text-indigo-500">Show why I got it wrong</button>
+            <button onClick={() => setRevealed(true)} className="mt-6 text-sm font-medium text-zinc-600">Show why I got it wrong</button>
           ) : (
             <div className="flex gap-2 mt-6">
               <button
@@ -100,7 +100,7 @@ export default function Mistakes() {
         subtitle={`${unmastered.length} to review`}
         right={
           unmastered.length > 0 && (
-            <button onClick={() => { setReviewMode(true); setReviewIdx(0); setRevealed(false) }} className="text-xs font-medium bg-indigo-600 text-white px-3 py-1.5 rounded-full">
+            <button onClick={() => { setReviewMode(true); setReviewIdx(0); setRevealed(false) }} className="text-xs font-medium bg-zinc-900 text-white px-3 py-1.5 rounded-full">
               Review
             </button>
           )
@@ -116,7 +116,7 @@ export default function Mistakes() {
           <textarea value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="What did you get wrong?" rows={2} className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-sm outline-none resize-none" />
           <textarea value={why} onChange={(e) => setWhy(e.target.value)} placeholder="Why did you get it wrong? (the actual lesson)" rows={2} className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-sm outline-none resize-none" />
           <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Tags, comma separated" className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-xs outline-none" />
-          <button type="submit" className="w-full rounded-lg bg-indigo-600 text-white py-2 text-sm font-medium">Log mistake</button>
+          <button type="submit" className="w-full rounded-lg bg-zinc-900 text-white py-2 text-sm font-medium">Log mistake</button>
         </form>
 
         <Card className="divide-y divide-black/5 dark:divide-white/10">
