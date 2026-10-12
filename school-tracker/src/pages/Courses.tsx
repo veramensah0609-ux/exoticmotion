@@ -101,18 +101,19 @@ export default function Courses() {
                   <button
                     key={c.id}
                     onClick={() => setExpanded(isSelected ? null : c.id)}
-                    className={`relative rounded-[24px] p-4 text-left aspect-square flex flex-col justify-between overflow-hidden shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)] transition-transform active:scale-[0.97] ${
+                    className={`relative rounded-[24px] p-4 text-left aspect-square flex flex-col justify-between overflow-hidden bg-white dark:bg-zinc-900/60 border border-black/5 dark:border-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.08)] transition-transform active:scale-[0.97] ${
                       isSelected ? 'ring-4 ring-offset-2 ring-offset-[#f0f0f2] dark:ring-offset-[#0b0d12]' : ''
                     }`}
-                    style={{ background: `linear-gradient(150deg, ${c.color}, ${c.color}99)`, ['--tw-ring-color' as string]: c.color }}
+                    style={{ ['--tw-ring-color' as string]: c.color }}
                   >
-                    <div className="h-8 w-8 rounded-full bg-white/25 flex items-center justify-center text-[11px] font-bold text-white shrink-0">
+                    <span className="absolute top-0 inset-x-0 h-1.5" style={{ background: c.color }} />
+                    <div className="h-8 w-8 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0" style={{ background: c.color }}>
                       {c.code.slice(0, 2)}
                     </div>
                     <div>
-                      <p className="text-base font-bold text-white tracking-tight leading-tight">{c.code}</p>
-                      <p className="text-[11px] text-white/80 mt-0.5 line-clamp-2">{c.name}</p>
-                      <span className="inline-block mt-2 text-[10px] font-medium text-white/90 bg-black/15 rounded-full px-2 py-0.5">
+                      <p className="text-base font-bold tracking-tight leading-tight">{c.code}</p>
+                      <p className="text-[11px] opacity-50 mt-0.5 line-clamp-2">{c.name}</p>
+                      <span className="inline-block mt-2 text-[10px] font-medium bg-black/5 dark:bg-white/10 rounded-full px-2 py-0.5">
                         {courseUnits.length} units
                       </span>
                     </div>
