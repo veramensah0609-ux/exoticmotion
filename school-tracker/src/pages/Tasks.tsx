@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useData } from '../contexts/DataContext'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
-import { Card, CourseDot, DueBadge, EmptyState, PageHeader } from '../components/shared'
+import { Card, CourseDot, DueBadge, EmptyState, PageHeader, tint } from '../components/shared'
 import { taskPriority } from '../lib/priority'
 import type { Task } from '../lib/types'
 
@@ -133,17 +133,20 @@ export default function Tasks() {
           </button>
         </div>
 
-        <Card className="divide-y divide-black/5 dark:divide-white/10">
-          {filtered.length === 0 ? (
+        {filtered.length === 0 ? (
+          <Card>
             <EmptyState icon="✅" text="No tasks here." />
-          ) : (
-            filtered.map((t) => {
+          </Card>
+        ) : (
+          <div className="space-y-2">
+            {filtered.map((t) => {
               const subs = subtasksOf(t.id)
               const course = t.course_id ? courseById[t.course_id] : undefined
               const isExpanded = expanded === t.id
               return (
-                <div key={t.id}>
-                  <div className="flex items-center gap-2.5 px-4 py-3">
+                <Card key={t.id} className="overflow-hidden" style={course ? { background: tint(course.color) } : undefined}>
+                  <div className="flex items-center gap-3 pl-1 pr-4 py-3">
+                    <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: course?.color ?? 'transparent' }} />
                     <button
                       onClick={() => toggle(t)}
                       className={`h-5 w-5 rounded-full border-2 shrink-0 flex items-center justify-center ${t.completed ? 'bg-zinc-900 border-zinc-900' : 'border-black/20 dark:border-white/30'}`}
@@ -155,14 +158,9 @@ export default function Tasks() {
                       )}
                     </button>
                     <button className="min-w-0 flex-1 text-left" onClick={() => setExpanded(isExpanded ? null : t.id)}>
-                      <p className={`text-sm font-medium truncate ${t.completed ? 'line-through opacity-40' : ''}`}>{t.title}</p>
+                      <p className={`text-sm font-semibold truncate ${t.completed ? 'line-through opacity-40' : ''}`}>{t.title}</p>
                       <div className="flex items-center gap-2 mt-0.5">
-                        {course && (
-                          <span className="text-xs opacity-50 flex items-center gap-1">
-                            <CourseDot color={course.color} />
-                            {course.code}
-                          </span>
-                        )}
+                        {course && <span className="text-xs opacity-50">{course.code}</span>}
                         {t.estimate_minutes && <span className="text-xs opacity-40">{t.estimate_minutes}m</span>}
                         {subs.length > 0 && <span className="text-xs opacity-40">{subs.filter((s) => s.completed).length}/{subs.length} subtasks</span>}
                       </div>
@@ -194,11 +192,11 @@ export default function Tasks() {
                       </div>
                     </div>
                   )}
-                </div>
+                </Card>
               )
-            })
-          )}
-        </Card>
+            })}
+          </div>
+        )}
       </div>
     </div>
   )
