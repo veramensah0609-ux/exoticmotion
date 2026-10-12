@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useData } from '../contexts/DataContext'
-import { Card, CourseDot, DueBadge, EmptyState, PageHeader } from '../components/shared'
+import { Card, DueBadge, EmptyState, PageHeader } from '../components/shared'
 import { daysUntil, isOverdue } from '../lib/priority'
 import { supabase } from '../lib/supabase'
 import { format } from 'date-fns'
@@ -63,75 +63,87 @@ export default function Dashboard() {
 
         {overdueTasks.length > 0 && (
           <section>
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2">Overdue ({overdueTasks.length})</h2>
-            <Card className="divide-y divide-black/5 dark:divide-white/10">
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2 px-1">Overdue ({overdueTasks.length})</h2>
+            <div className="space-y-2">
               {overdueTasks.map((t) => (
-                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
+                <Card key={t.id}>
+                  <TaskRow task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
+                </Card>
               ))}
-            </Card>
+            </div>
           </section>
         )}
 
         {missingAssessments.length > 0 && (
           <section>
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2">Missing work</h2>
-            <Card className="divide-y divide-black/5 dark:divide-white/10">
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2 px-1">Missing work</h2>
+            <div className="space-y-2">
               {missingAssessments.map((a) => (
-                <button key={a.id} onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-2.5 px-4 py-3 text-left">
-                  <CourseDot color={courseById[a.course_id]?.color ?? '#888'} />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium truncate">{a.title}</p>
-                    <p className="text-xs opacity-50">{courseById[a.course_id]?.code}</p>
-                  </div>
-                  <DueBadge date={a.due_date} />
-                </button>
+                <Card key={a.id} className="overflow-hidden">
+                  <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
+                    <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: courseById[a.course_id]?.color ?? '#888' }} />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold truncate">{a.title}</p>
+                      <p className="text-xs opacity-50 mt-0.5">{courseById[a.course_id]?.code}</p>
+                    </div>
+                    <DueBadge date={a.due_date} />
+                  </button>
+                </Card>
               ))}
-            </Card>
+            </div>
           </section>
         )}
 
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Today ({todayTasks.length})</h2>
-          <Card className="divide-y divide-black/5 dark:divide-white/10">
-            {todayTasks.length === 0 ? (
+          <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2 px-1">Today ({todayTasks.length})</h2>
+          {todayTasks.length === 0 ? (
+            <Card>
               <EmptyState text="Nothing due today. Nice." />
-            ) : (
-              todayTasks.map((t) => (
-                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
-              ))
-            )}
-          </Card>
+            </Card>
+          ) : (
+            <div className="space-y-2">
+              {todayTasks.map((t) => (
+                <Card key={t.id}>
+                  <TaskRow task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
+                </Card>
+              ))}
+            </div>
+          )}
         </section>
 
         {upcomingTasks.length > 0 && (
           <section>
-            <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Coming up</h2>
-            <Card className="divide-y divide-black/5 dark:divide-white/10">
+            <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2 px-1">Coming up</h2>
+            <div className="space-y-2">
               {upcomingTasks.map((t) => (
-                <TaskRow key={t.id} task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
+                <Card key={t.id}>
+                  <TaskRow task={t} course={t.course_id ? courseById[t.course_id] : undefined} onToggle={toggleTask} onSelect={setSelectedTask} />
+                </Card>
               ))}
-            </Card>
+            </div>
           </section>
         )}
 
         {upcomingAssessments.length > 0 && (
           <section>
-            <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2">Assessments this week+</h2>
-            <Card className="divide-y divide-black/5 dark:divide-white/10">
+            <h2 className="text-xs font-semibold uppercase tracking-wide opacity-50 mb-2 px-1">Assessments this week+</h2>
+            <div className="space-y-2">
               {upcomingAssessments.map((a) => (
-                <button key={a.id} onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-2.5 px-4 py-3 text-left">
-                  <CourseDot color={courseById[a.course_id]?.color ?? '#888'} />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium truncate">{a.title}</p>
-                    <p className="text-xs opacity-50">
-                      {courseById[a.course_id]?.code} · {a.type}
-                      {a.weight_percent ? ` · ${a.weight_percent}%` : ''}
-                    </p>
-                  </div>
-                  <DueBadge date={a.due_date} />
-                </button>
+                <Card key={a.id} className="overflow-hidden">
+                  <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
+                    <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: courseById[a.course_id]?.color ?? '#888' }} />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold truncate">{a.title}</p>
+                      <p className="text-xs opacity-50 mt-0.5">
+                        {courseById[a.course_id]?.code} · {a.type}
+                        {a.weight_percent ? ` · ${a.weight_percent}%` : ''}
+                      </p>
+                    </div>
+                    <DueBadge date={a.due_date} />
+                  </button>
+                </Card>
               ))}
-            </Card>
+            </div>
           </section>
         )}
       </div>
@@ -154,7 +166,8 @@ function TaskRow({
   onSelect: (task: Task) => void
 }) {
   return (
-    <div className="flex items-center gap-2.5 px-4 py-3">
+    <div className="flex items-center gap-3 pl-1 pr-4 py-3">
+      <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: course?.color ?? 'transparent' }} />
       <button
         onClick={() => onToggle(task.id, task.completed)}
         className={`h-5 w-5 rounded-full border-2 shrink-0 flex items-center justify-center ${
@@ -168,8 +181,8 @@ function TaskRow({
         )}
       </button>
       <button onClick={() => onSelect(task)} className="min-w-0 flex-1 text-left">
-        <p className={`text-sm font-medium truncate ${task.completed ? 'line-through opacity-40' : ''}`}>{task.title}</p>
-        {course && <p className="text-xs opacity-50 flex items-center gap-1 mt-0.5"><CourseDot color={course.color} />{course.code}</p>}
+        <p className={`text-sm font-semibold truncate ${task.completed ? 'line-through opacity-40' : ''}`}>{task.title}</p>
+        {course && <p className="text-xs opacity-50 mt-0.5">{course.code}</p>}
       </button>
       <DueBadge date={task.due_date} done={task.completed} />
     </div>
