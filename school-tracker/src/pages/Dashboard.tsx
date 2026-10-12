@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useData } from '../contexts/DataContext'
-import { Card, DueBadge, EmptyState, PageHeader, ProgressRing, tint } from '../components/shared'
+import { Card, DueBadge, EmptyState, PageHeader, ProgressRing } from '../components/shared'
 import { daysUntil, isOverdue } from '../lib/priority'
 import { supabase } from '../lib/supabase'
 import { format } from 'date-fns'
@@ -55,7 +55,7 @@ export default function Dashboard() {
 
       <div className="px-4 space-y-4">
         {nextTest && (
-          <Card className="p-4 bg-gradient-to-br from-zinc-900 to-violet-600 text-white border-0">
+          <Card className="p-4 bg-gradient-to-br from-zinc-900 to-zinc-700 text-white border-0">
             <p className="text-xs font-medium opacity-80">Next test · {courseById[nextTest.course_id]?.code}</p>
             <p className="text-lg font-bold mt-0.5">{nextTest.title}</p>
             <p className="text-sm opacity-90 mt-0.5">
@@ -76,7 +76,7 @@ export default function Dashboard() {
               {overdueTasks.map((t) => {
                 const course = t.course_id ? courseById[t.course_id] : undefined
                 return (
-                  <Card key={t.id} style={course ? { background: tint(course.color) } : undefined}>
+                  <Card key={t.id}>
                     <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
                   </Card>
                 )
@@ -92,7 +92,7 @@ export default function Dashboard() {
               {missingAssessments.map((a) => {
                 const color = courseById[a.course_id]?.color ?? '#888'
                 return (
-                  <Card key={a.id} className="overflow-hidden" style={{ background: tint(color) }}>
+                  <Card key={a.id} className="overflow-hidden">
                     <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
                       <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: color }} />
                       <div className="min-w-0 flex-1">
@@ -119,7 +119,7 @@ export default function Dashboard() {
               {todayTasks.map((t) => {
                 const course = t.course_id ? courseById[t.course_id] : undefined
                 return (
-                  <Card key={t.id} style={course ? { background: tint(course.color) } : undefined}>
+                  <Card key={t.id}>
                     <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
                   </Card>
                 )
@@ -135,7 +135,7 @@ export default function Dashboard() {
               {upcomingTasks.map((t) => {
                 const course = t.course_id ? courseById[t.course_id] : undefined
                 return (
-                  <Card key={t.id} style={course ? { background: tint(course.color) } : undefined}>
+                  <Card key={t.id}>
                     <TaskRow task={t} course={course} onToggle={toggleTask} onSelect={setSelectedTask} />
                   </Card>
                 )
@@ -151,7 +151,7 @@ export default function Dashboard() {
               {upcomingAssessments.map((a) => {
                 const color = courseById[a.course_id]?.color ?? '#888'
                 return (
-                  <Card key={a.id} className="overflow-hidden" style={{ background: tint(color) }}>
+                  <Card key={a.id} className="overflow-hidden">
                     <button onClick={() => setSelectedAssessment(a)} className="w-full flex items-center gap-3 pl-1 pr-4 py-3.5 text-left">
                       <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: color }} />
                       <div className="min-w-0 flex-1">

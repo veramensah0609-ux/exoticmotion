@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useData } from '../contexts/DataContext'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
-import { Card, CourseDot, DueBadge, EmptyState, PageHeader, tint } from '../components/shared'
+import { Card, CourseDot, DueBadge, EmptyState, PageHeader } from '../components/shared'
 import { taskPriority } from '../lib/priority'
 import type { Task } from '../lib/types'
 
@@ -144,7 +144,7 @@ export default function Tasks() {
               const course = t.course_id ? courseById[t.course_id] : undefined
               const isExpanded = expanded === t.id
               return (
-                <Card key={t.id} className="overflow-hidden" style={course ? { background: tint(course.color) } : undefined}>
+                <Card key={t.id} className="overflow-hidden">
                   <div className="flex items-center gap-3 pl-1 pr-4 py-3">
                     <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: course?.color ?? 'transparent' }} />
                     <button
