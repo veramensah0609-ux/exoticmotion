@@ -79,9 +79,9 @@ export default function Tasks() {
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               placeholder="Add a task or assessment…"
-              className="flex-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-zinc-600"
+              className="flex-1 rounded-xl border border-black/10 dark:border-white/15 bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-neutral-600"
             />
-            <button type="submit" className="rounded-xl bg-zinc-900 text-white px-4 text-sm font-medium">Add</button>
+            <button type="submit" className="rounded-xl bg-neutral-900 text-white px-4 text-sm font-medium">Add</button>
           </div>
           <div className="flex gap-2">
             <label className="flex-1 text-xs space-y-1">
@@ -114,7 +114,7 @@ export default function Tasks() {
         <div className="flex gap-2 mb-3 overflow-x-auto pb-1 -mx-1 px-1">
           <button
             onClick={() => setFilterCourse('all')}
-            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium ${filterCourse === 'all' ? 'bg-zinc-900 text-white' : 'bg-black/5 dark:bg-white/10'}`}
+            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium ${filterCourse === 'all' ? 'bg-neutral-900 text-white' : 'bg-black/5 dark:bg-white/10'}`}
           >
             All
           </button>
@@ -122,13 +122,13 @@ export default function Tasks() {
             <button
               key={c.id}
               onClick={() => setFilterCourse(c.id)}
-              className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 ${filterCourse === c.id ? 'bg-zinc-900 text-white' : 'bg-black/5 dark:bg-white/10'}`}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 ${filterCourse === c.id ? 'bg-neutral-900 text-white' : 'bg-black/5 dark:bg-white/10'}`}
             >
               <CourseDot color={c.color} />
               {c.code}
             </button>
           ))}
-          <button onClick={() => setShowDone((s) => !s)} className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium ${showDone ? 'bg-zinc-900 text-white' : 'bg-black/5 dark:bg-white/10'}`}>
+          <button onClick={() => setShowDone((s) => !s)} className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium ${showDone ? 'bg-neutral-900 text-white' : 'bg-black/5 dark:bg-white/10'}`}>
             {showDone ? 'Hide done' : 'Show done'}
           </button>
         </div>
@@ -149,7 +149,7 @@ export default function Tasks() {
                     <span className="h-full w-1.5 self-stretch rounded-full shrink-0" style={{ background: course?.color ?? 'transparent' }} />
                     <button
                       onClick={() => toggle(t)}
-                      className={`h-5 w-5 rounded-full border-2 shrink-0 flex items-center justify-center ${t.completed ? 'bg-zinc-900 border-zinc-900' : 'border-black/20 dark:border-white/30'}`}
+                      className={`h-5 w-5 rounded-full border-2 shrink-0 flex items-center justify-center ${t.completed ? 'bg-neutral-900 border-neutral-900' : 'border-black/20 dark:border-white/30'}`}
                     >
                       {t.completed && (
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
@@ -174,7 +174,7 @@ export default function Tasks() {
                         <div key={s.id} className="flex items-center gap-2">
                           <button
                             onClick={() => toggle(s)}
-                            className={`h-4 w-4 rounded-full border-2 shrink-0 flex items-center justify-center ${s.completed ? 'bg-zinc-900 border-zinc-900' : 'border-black/20 dark:border-white/30'}`}
+                            className={`h-4 w-4 rounded-full border-2 shrink-0 flex items-center justify-center ${s.completed ? 'bg-neutral-900 border-neutral-900' : 'border-black/20 dark:border-white/30'}`}
                           />
                           <p className={`text-xs flex-1 ${s.completed ? 'line-through opacity-40' : ''}`}>{s.title}</p>
                           <button onClick={() => remove(s.id)} className="opacity-30 hover:opacity-70 text-xs">✕</button>
@@ -188,7 +188,7 @@ export default function Tasks() {
                           placeholder="Break this down…"
                           className="flex-1 rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2 py-1.5 text-xs outline-none"
                         />
-                        <button onClick={() => addSubtask(t.id, t.course_id)} className="text-xs font-medium text-zinc-600 px-2">Add</button>
+                        <button onClick={() => addSubtask(t.id, t.course_id)} className="text-xs font-medium text-neutral-600 px-2">Add</button>
                       </div>
                     </div>
                   )}

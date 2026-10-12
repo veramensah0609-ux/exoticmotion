@@ -102,7 +102,7 @@ export default function Study() {
           </select>
           <button
             onClick={running ? stop : start}
-            className={`mt-4 w-full rounded-xl py-3 text-sm font-semibold ${running ? 'bg-red-500 text-white' : 'bg-zinc-900 text-white'}`}
+            className={`mt-4 w-full rounded-xl py-3 text-sm font-semibold ${running ? 'bg-red-500 text-white' : 'bg-neutral-900 text-white'}`}
           >
             {running ? 'Stop & save' : 'Start studying'}
           </button>

@@ -73,7 +73,7 @@ export default function Flashcards() {
           </Card>
         </button>
         <div className="flex gap-2 mt-4">
-          <button onClick={() => { setIdx((i) => i + 1); setFlipped(false) }} className="flex-1 rounded-xl bg-zinc-900 text-white py-2.5 text-sm font-medium">Next card</button>
+          <button onClick={() => { setIdx((i) => i + 1); setFlipped(false) }} className="flex-1 rounded-xl bg-neutral-900 text-white py-2.5 text-sm font-medium">Next card</button>
         </div>
       </div>
     )
@@ -100,7 +100,7 @@ export default function Flashcards() {
           </div>
           <input value={front} onChange={(e) => setFront(e.target.value)} placeholder="Front" className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-sm outline-none" />
           <input value={back} onChange={(e) => setBack(e.target.value)} placeholder="Back" className="w-full rounded-lg border border-black/10 dark:border-white/15 bg-transparent px-2.5 py-2 text-sm outline-none" />
-          <button type="submit" className="w-full rounded-lg bg-zinc-900 text-white py-2 text-sm font-medium">Add card</button>
+          <button type="submit" className="w-full rounded-lg bg-neutral-900 text-white py-2 text-sm font-medium">Add card</button>
         </form>
 
         {decks.length === 0 ? (
@@ -112,7 +112,7 @@ export default function Flashcards() {
               <Card key={d} className="p-3">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm font-semibold">{d} <span className="opacity-40 font-normal">({cards.length})</span></p>
-                  <button onClick={() => { setStudyDeck(d); setIdx(0); setFlipped(false) }} className="text-xs font-medium text-zinc-600">Study</button>
+                  <button onClick={() => { setStudyDeck(d); setIdx(0); setFlipped(false) }} className="text-xs font-medium text-neutral-600">Study</button>
                 </div>
                 <div className="space-y-1">
                   {cards.slice(0, 3).map((c) => (

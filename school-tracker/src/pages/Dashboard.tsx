@@ -55,7 +55,7 @@ export default function Dashboard() {
 
       <div className="px-4 space-y-4">
         {nextTest && (
-          <Card className="p-4 bg-gradient-to-br from-zinc-900 to-zinc-700 text-white border-0">
+          <Card className="p-4 bg-gradient-to-br from-neutral-900 to-neutral-700 text-white border-0">
             <p className="text-xs font-medium opacity-80">Next test · {courseById[nextTest.course_id]?.code}</p>
             <p className="text-lg font-bold mt-0.5">{nextTest.title}</p>
             <p className="text-sm opacity-90 mt-0.5">
@@ -194,7 +194,7 @@ function TaskRow({
       <button
         onClick={() => onToggle(task.id, task.completed)}
         className={`h-5 w-5 rounded-full border-2 shrink-0 flex items-center justify-center ${
-          task.completed ? 'bg-zinc-900 border-zinc-900' : 'border-black/20 dark:border-white/30'
+          task.completed ? 'bg-neutral-900 border-neutral-900' : 'border-black/20 dark:border-white/30'
         }`}
       >
         {task.completed && (

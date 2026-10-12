@@ -38,7 +38,7 @@ export default function More() {
           </div>
           <button
             onClick={toggle}
-            className={`h-7 w-12 rounded-full relative transition ${theme === 'dark' ? 'bg-zinc-900' : 'bg-black/15'}`}
+            className={`h-7 w-12 rounded-full relative transition ${theme === 'dark' ? 'bg-neutral-900' : 'bg-black/15'}`}
           >
             <span className={`absolute top-0.5 h-6 w-6 rounded-full bg-white transition ${theme === 'dark' ? 'left-5' : 'left-0.5'}`} />
           </button>
