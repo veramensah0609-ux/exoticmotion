@@ -14,7 +14,7 @@ export default function Layout() {
   const [quickAddOpen, setQuickAddOpen] = useState(false)
 
   return (
-    <div className="min-h-dvh pb-24">
+    <div className="min-h-dvh pb-36">
       <Outlet />
 
       <button
