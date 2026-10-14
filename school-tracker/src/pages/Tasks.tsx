@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase'
 import { Card, CourseDot, DueBadge, EmptyState, PageHeader } from '../components/shared'
 import { taskPriority } from '../lib/priority'
 import type { Task } from '../lib/types'
+import TaskSheet from '../components/TaskSheet'
 
 export default function Tasks() {
   const { user } = useAuth()
@@ -16,6 +17,8 @@ export default function Tasks() {
   const [newCourseId, setNewCourseId] = useState('')
   const [expanded, setExpanded] = useState<string | null>(null)
   const [subtaskDraft, setSubtaskDraft] = useState('')
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null)
+  const editingTask = editingTaskId ? tasks.find((t) => t.id === editingTaskId) ?? null : null
 
   const courseById = useMemo(() => Object.fromEntries(courses.map((c) => [c.id, c])), [courses])
 
@@ -157,16 +160,20 @@ export default function Tasks() {
                         </svg>
                       )}
                     </button>
-                    <button className="min-w-0 flex-1 text-left" onClick={() => setExpanded(isExpanded ? null : t.id)}>
-                      <p className={`text-sm font-semibold truncate ${t.completed ? 'line-through opacity-40' : ''}`}>{t.title}</p>
+                    <button className="min-w-0 flex-1 text-left" onClick={() => setEditingTaskId(t.id)}>
+                      <p className={`text-sm font-semibold ${t.completed ? 'line-through opacity-40' : ''}`}>{t.title}</p>
                       <div className="flex items-center gap-2 mt-0.5">
                         {course && <span className="text-xs opacity-50">{course.code}</span>}
                         {t.estimate_minutes && <span className="text-xs opacity-40">{t.estimate_minutes}m</span>}
-                        {subs.length > 0 && <span className="text-xs opacity-40">{subs.filter((s) => s.completed).length}/{subs.length} subtasks</span>}
                       </div>
                     </button>
                     <DueBadge date={t.due_date} done={t.completed} />
-                    <button onClick={() => remove(t.id)} className="opacity-30 hover:opacity-70 text-xs px-1">✕</button>
+                    <button
+                      onClick={() => setExpanded(isExpanded ? null : t.id)}
+                      className="opacity-40 hover:opacity-70 text-[10px] px-1.5 py-1 shrink-0"
+                    >
+                      {subs.length > 0 ? `${subs.filter((s) => s.completed).length}/${subs.length}` : '+'} {isExpanded ? '▾' : '▸'}
+                    </button>
                   </div>
                   {isExpanded && (
                     <div className="pl-11 pr-4 pb-3 space-y-2">
@@ -198,6 +205,8 @@ export default function Tasks() {
           </div>
         )}
       </div>
+
+      {editingTask && <TaskSheet task={editingTask} onClose={() => setEditingTaskId(null)} />}
     </div>
   )
 }
